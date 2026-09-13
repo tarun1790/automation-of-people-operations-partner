@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas — Your 24/7 Autonomous People Operations Partner</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./static/css/styles.css">
+</head>
+<body class="bg-[#f5f5f7] text-[#1d1d1f] min-h-screen flex flex-col antialiased">
+
+    <!-- Translucent Frosted Glass Header -->
+    <header class="apple-nav px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2.5">
+                <div class="h-7 w-7 rounded-full bg-[#1d1d1f] flex items-center justify-center text-white text-xs font-semibold tracking-tight">
+                    A
+                </div>
+                <div class="text-sm font-semibold tracking-tight text-[#1d1d1f]">
+                    Atlas <span class="font-normal text-[#86868b]">Autonomous People Operations</span>
+                </div>
+            </div>
+
+            <!-- Apple Segmented Navigation -->
+            <nav class="apple-segmented overflow-x-auto">
+                <button data-tab="dashboard" class="apple-segment-btn active">Overview</button>
+                <button data-tab="agent" class="apple-segment-btn font-medium text-[#0071e3]">Autonomous Agent</button>
+                <button data-tab="attrition" class="apple-segment-btn">Flight Risk</button>
+                <button data-tab="simulation" class="apple-segment-btn">Scenario Planner</button>
+                <button data-tab="actions" class="apple-segment-btn">Approvals</button>
+                <button data-tab="talent" class="apple-segment-btn">Recruitment</button>
+                <button data-tab="performance" class="apple-segment-btn">Performance</button>
+                <button data-tab="skills" class="apple-segment-btn">Skills & Mobility</button>
+                <button data-tab="onboarding" class="apple-segment-btn">Onboarding & IT</button>
+                <button data-tab="policy" class="apple-segment-btn">Policy Handbook</button>
+                <button data-tab="governance" class="apple-segment-btn">System Health</button>
+            </nav>
+        </div>
+
+        <div class="flex items-center gap-3 text-xs">
+            <div id="header-agent-pill" onclick="toggleAgentMode()" class="flex items-center gap-1.5 px-3 py-1 bg-white border border-[rgba(0,0,0,0.08)] rounded-full shadow-sm cursor-pointer hover:bg-[#fafafc] transition-colors" title="Click to toggle between Autonomous and Supervised mode">
+                <span id="header-agent-dot" class="h-2 w-2 rounded-full bg-[#34c759] animate-pulse"></span>
+                <span id="header-agent-text" class="text-[#1d1d1f] font-medium">Auto-Pilot: Active</span>
+            </div>
+            <div class="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-white border border-[rgba(0,0,0,0.06)] rounded-full shadow-sm text-[#86868b]">
+                <span class="h-2 w-2 rounded-full bg-[#34c759]"></span>
+                <span class="text-[#1d1d1f] font-medium">RTX 3070 Ti Active</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="h-7 w-7 rounded-full bg-[#e5e5ea] text-[#1d1d1f] font-semibold text-xs flex items-center justify-center">SJ</div>
+                <div class="text-left leading-tight hidden md:block">
+                    <div class="text-xs font-semibold text-[#1d1d1f]">Sarah Jenkins</div>
+                    <div class="text-[11px] text-[#86868b]">HR Director</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Fluid Canvas -->
+    <main class="w-full max-w-[1600px] mx-auto px-6 sm:px-10 py-8 flex-1 space-y-8">
+
+        <!-- TAB 1: EXECUTIVE OVERVIEW -->
+        <section id="tab-dashboard" class="tab-content space-y-8">
+            <!-- Atlas Autonomous Hero Banner -->
+            <div class="apple-card p-6 bg-gradient-to-r from-white via-white to-[#f0f7ff] border-[#0071e3]/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="apple-badge apple-badge-blue">Auto-Pilot Active</span>
+                        <span class="text-xs text-[#86868b]">Continuous Autonomous Operations</span>
+                    </div>
+                    <h1 class="text-2xl font-semibold text-[#1d1d1f] mt-1.5 tracking-tight">Atlas — Your 24/7 Autonomous People Operations Partner</h1>
+                    <p class="text-xs text-[#86868b] max-w-3xl mt-1 leading-relaxed">
+                        Atlas operates 24/7 in the background: continuously calculating turnover flight risk, rebalancing overtime burnout, provisioning corporate email & IT accounts for new hires, and calculating counterfactual salary plans with zero manual administrative overhead.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-2.5">
+                    <button onclick="triggerNewHireDemo()" class="apple-btn-primary text-xs">
+                        <span>⚡ Auto-Provision New Hire</span>
+                    </button>
+                    <button onclick="triggerPatrolDemo()" class="apple-btn-secondary text-xs">
+                        <span>Run Full Patrol</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Metric Grid (Apple Cards) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3.5">
+                <div class="apple-kpi-card">
+                    <div class="text-xs font-medium text-[#86868b]">Total Staff</div>
+                    <div id="metric-total-emps" class="text-2xl font-semibold text-[#1d1d1f] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#86868b] mt-1">6 Teams</div>
+                </div>
+                <div class="apple-kpi-card border-[#ff3b30]/30 bg-[#fffbfb]">
+                    <div class="text-xs font-medium text-[#86868b]">Flight Risk</div>
+                    <div id="metric-high-risk" class="text-2xl font-semibold text-[#ff3b30] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#ff3b30] mt-1">At-risk staff</div>
+                </div>
+                <div class="apple-kpi-card border-[#34c759]/30 bg-[#fbfdfb]">
+                    <div class="text-xs font-medium text-[#86868b]">Health Score</div>
+                    <div id="metric-health-index" class="text-2xl font-semibold text-[#34c759] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#34c759] mt-1">Score out of 100</div>
+                </div>
+                <div class="apple-kpi-card">
+                    <div class="text-xs font-medium text-[#86868b]">Avg Review</div>
+                    <div id="metric-avg-perf" class="text-2xl font-semibold text-[#1d1d1f] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#86868b] mt-1">Out of 5.0</div>
+                </div>
+                <div class="apple-kpi-card">
+                    <div class="text-xs font-medium text-[#86868b]">Open Roles</div>
+                    <div id="metric-open-pos" class="text-2xl font-semibold text-[#0071e3] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#0071e3] mt-1">Active openings</div>
+                </div>
+                <div class="apple-kpi-card">
+                    <div class="text-xs font-medium text-[#86868b]">Skill Coverage</div>
+                    <div id="metric-skill-cov" class="text-2xl font-semibold text-[#1d1d1f] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#86868b] mt-1">Team coverage</div>
+                </div>
+                <div class="apple-kpi-card border-[#ff9500]/30 bg-[#fffdfa]">
+                    <div class="text-xs font-medium text-[#86868b]">Approvals</div>
+                    <div id="metric-pending-actions" class="text-2xl font-semibold text-[#ff9500] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#ff9500] mt-1">Awaiting review</div>
+                </div>
+                <div class="apple-kpi-card border-[#ff3b30]/30 bg-[#fffbfb]">
+                    <div class="text-xs font-medium text-[#86868b]">Critical Skills</div>
+                    <div id="metric-spofs" class="text-2xl font-semibold text-[#ff3b30] mt-1.5 tracking-tight">--</div>
+                    <div class="text-[11px] text-[#ff3b30] mt-1">Single holders</div>
+                </div>
+            </div>
+
+            <!-- Department Attrition Status Cards -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <div>
+                        <h2 class="text-lg font-semibold tracking-tight text-[#1d1d1f]">Department Turnover & Burnout Risk Scores</h2>
+                        <p class="text-xs text-[#86868b]">Higher score (0-100) indicates higher probability of staff quitting in the next 6 months due to overtime burnout or pay deficits.</p>
+                    </div>
+                    <span class="text-xs text-[#86868b] self-start sm:self-auto font-mono">0-30: Healthy • 31-60: Moderate • 61-100: Critical</span>
+                </div>
+                <div id="risk-radar-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Recommended Interventions -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold tracking-tight text-[#1d1d1f]">Autonomous Proposals & Recommendations</h2>
+                    <span class="text-xs text-[#86868b]">Pre-calibrated retention solutions</span>
+                </div>
+                <div id="ai-insights-container" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 1B: AUTONOMOUS AGENT CONSOLE -->
+        <section id="tab-agent" class="tab-content hidden space-y-6">
+            <!-- Agent Operations Deck -->
+            <div class="apple-card p-6 space-y-4">
+                <div class="flex flex-wrap justify-between items-center gap-4 border-b border-[rgba(0,0,0,0.06)] pb-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span id="agent-deck-badge" class="apple-badge apple-badge-green">Auto-Pilot: Active</span>
+                            <span class="text-xs text-[#86868b]">NVIDIA GeForce RTX 3070 Ti Accelerated</span>
+                        </div>
+                        <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">Autonomous Operations Console</h1>
+                        <p class="text-xs text-[#86868b]">Ingests natural-language messages from any channel, evaluates workforce telemetry, and executes tasks independently.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="toggleAgentMode()" id="agent-mode-toggle-btn" class="apple-btn-secondary text-xs">
+                            Switch to Supervised Mode
+                        </button>
+                        <button onclick="triggerPatrolDemo()" class="apple-btn-primary text-xs">
+                            Run Organization Patrol
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Operating Mode</div>
+                        <div id="deck-agent-mode" class="text-lg font-semibold text-[#0071e3] mt-0.5">Autonomous</div>
+                        <div class="text-[10px] text-[#86868b]">Auto-executes safe tasks</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Tasks Executed Today</div>
+                        <div id="deck-tasks-count" class="text-lg font-semibold text-[#1d1d1f] mt-0.5">--</div>
+                        <div class="text-[10px] text-[#86868b]">Zero manual human effort</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Turnover Savings Secured</div>
+                        <div id="deck-savings-secured" class="text-lg font-semibold text-[#34c759] mt-0.5">--</div>
+                        <div class="text-[10px] text-[#34c759]">Replacement costs avoided</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Last Patrol Run</div>
+                        <div id="deck-last-patrol" class="text-lg font-semibold text-[#1d1d1f] mt-0.5 font-mono text-xs">--</div>
+                        <div class="text-[10px] text-[#86868b]">Continuous monitoring</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two-Column Agent Workspace -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left 2 Cols: Message Inbox & Dispatch -->
+                <div class="lg:col-span-2 apple-card p-6 flex flex-col justify-between space-y-4 min-h-[580px]">
+                    <div>
+                        <div class="border-b border-[rgba(0,0,0,0.06)] pb-3 mb-4 flex justify-between items-center">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">Agent Dispatch & Message Inbox</span>
+                            <span class="text-xs text-[#86868b]">Send instructions or incident reports</span>
+                        </div>
+
+                        <!-- Quick Action Trigger Pills -->
+                        <div class="mb-4">
+                            <div class="text-[11px] font-medium text-[#86868b] mb-1.5">One-Click Automated Workflows:</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <button onclick="sendQuickAgentCommand('Onboard Kavita Sharma as Senior Cloud Architect in Engineering')" class="apple-btn-secondary text-[11px] py-1 px-3">
+                                    ⚡ Auto-Provision New Hire & Mail
+                                </button>
+                                <button onclick="sendQuickAgentCommand('Run a full audit of all departments and report critical flight risks')" class="apple-btn-secondary text-[11px] py-1 px-3">
+                                    ⚡ Organization Health Patrol
+                                </button>
+                                <button onclick="sendQuickAgentCommand('Elena Rostova is logging high overtime and seems burnt out. Rebalance her schedule and prepare retention package.')" class="apple-btn-secondary text-[11px] py-1 px-3">
+                                    ⚡ Retain Elena & Rebalance Hours
+                                </button>
+                                <button onclick="sendQuickAgentCommand('Screen applicant resumes for open roles using blind screening')" class="apple-btn-secondary text-[11px] py-1 px-3">
+                                    ⚡ Blind Screen Applicants
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Chat stream container -->
+                        <div id="agent-chat-stream" class="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Message input box -->
+                    <div class="pt-3 border-t border-[rgba(0,0,0,0.06)] flex gap-2">
+                        <input id="agent-message-input" type="text" placeholder="Type instructions, e.g. 'Onboard John Doe as Product Manager' or 'Check Engineering flight risk'..." class="apple-input text-xs">
+                        <button id="agent-message-send-btn" onclick="submitAgentChat()" class="apple-btn-primary px-5 text-xs font-medium">Send</button>
+                    </div>
+                </div>
+
+                <!-- Right 1 Col: Live Autonomous Activity Stream -->
+                <div class="apple-card p-6 space-y-4">
+                    <div class="border-b border-[rgba(0,0,0,0.06)] pb-3 flex justify-between items-center">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f]">Live Decision Stream</span>
+                        <span class="h-2 w-2 rounded-full bg-[#34c759] animate-pulse"></span>
+                    </div>
+                    <p class="text-[11px] text-[#86868b]">Immutable record of tasks executed autonomously by TalentOS without human intervention.</p>
+
+                    <div id="agent-live-feed" class="space-y-3 max-h-[520px] overflow-y-auto pr-1">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: FLIGHT RISK DIRECTORY -->
+        <section id="tab-attrition" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Staff Retention & Flight Risk</h1>
+                <p class="text-sm text-[#86868b] mt-1">Identifies employees experiencing workload exhaustion, compensation gaps, or promotion delays.</p>
+            </div>
+
+            <div class="apple-card overflow-hidden">
+                <div class="px-6 py-4 border-b border-[rgba(0,0,0,0.06)] flex justify-between items-center bg-white">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">Employee Directory & Risk Scoring</span>
+                    <span class="text-xs text-[#86868b]">PyTorch CUDA Machine Learning</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="apple-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Department</th>
+                                <th>Role</th>
+                                <th>Estimated Risk</th>
+                                <th>Risk Level</th>
+                                <th>Contributing Factors</th>
+                                <th>Context Statement</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attrition-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: SCENARIO & BUDGET PLANNER -->
+        <section id="tab-simulation" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Scenario & Budget Planner</h1>
+                <p class="text-sm text-[#86868b] mt-1">Test the expected impact of workload and salary adjustments before allocating budget.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Controls -->
+                <div class="apple-card p-6 space-y-5">
+                    <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f] border-b border-[rgba(0,0,0,0.06)] pb-3">Intervention Controls</h2>
+                    
+                    <div>
+                        <label class="block text-xs font-medium text-[#86868b] mb-1.5">Target Department:</label>
+                        <select id="sim-dept-select" class="apple-input text-xs py-2">
+                            <option value="Engineering">Engineering</option>
+                            <option value="Product & Design">Product & Design</option>
+                            <option value="Data & AI">Data & AI</option>
+                            <option value="Sales & Marketing">Sales & Marketing</option>
+                            <option value="People Operations">People Operations</option>
+                            <option value="All">All Departments</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-[#1d1d1f] mb-1.5 font-medium">
+                            <span>Overtime Reduction:</span>
+                            <span id="sim-overtime-val" class="text-[#0071e3] font-semibold">-25.0%</span>
+                        </div>
+                        <input id="sim-overtime-slider" type="range" min="-40" max="0" value="-25" step="5">
+                        <p class="text-[11px] text-[#86868b] mt-1">Rebalances on-call rotation to prevent burnout.</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-[#1d1d1f] mb-1.5 font-medium">
+                            <span>Salary Adjustment:</span>
+                            <span id="sim-salary-val" class="text-[#0071e3] font-semibold">+5.0%</span>
+                        </div>
+                        <input id="sim-salary-slider" type="range" min="0" max="15" value="5" step="1">
+                        <p class="text-[11px] text-[#86868b] mt-1">Brings pay closer to regional tech benchmark.</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-[#1d1d1f] mb-1.5 font-medium">
+                            <span>Promotion Acceleration:</span>
+                            <span id="sim-promo-val" class="text-[#0071e3] font-semibold">6 mos</span>
+                        </div>
+                        <input id="sim-promo-slider" type="range" min="0" max="12" value="6" step="2">
+                        <p class="text-[11px] text-[#86868b] mt-1">Shortens career progression window.</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-[#1d1d1f] mb-1.5 font-medium">
+                            <span>Additional Staff:</span>
+                            <span id="sim-staff-val" class="text-[#0071e3] font-semibold">+2</span>
+                        </div>
+                        <input id="sim-staff-slider" type="range" min="0" max="8" value="2" step="1">
+                        <p class="text-[11px] text-[#86868b] mt-1">Directly absorbs department workload.</p>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="lg:col-span-2 apple-card p-6 space-y-6 flex flex-col justify-between">
+                    <div>
+                        <div class="border-b border-[rgba(0,0,0,0.06)] pb-3 mb-6">
+                            <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Projected Retention & Financial Outcome</h2>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="bg-[#f5f5f7] p-5 rounded-2xl text-center">
+                                <div class="text-xs font-medium text-[#86868b]">Baseline Flight Risk</div>
+                                <div id="sim-current-risk" class="text-3xl font-semibold text-[#1d1d1f] mt-1 tracking-tight">--</div>
+                                <div class="text-[11px] text-[#86868b] mt-0.5">Current status</div>
+                            </div>
+                            <div class="bg-[#f0f7ff] p-5 rounded-2xl text-center border border-[#0071e3]/15">
+                                <div class="text-xs font-medium text-[#0071e3]">Projected Flight Risk</div>
+                                <div id="sim-proj-risk" class="text-3xl font-semibold text-[#0071e3] mt-1 tracking-tight">--</div>
+                                <div class="text-[11px] text-[#0071e3]/80 mt-0.5">With selected levers</div>
+                            </div>
+                            <div class="bg-[#f2fbf4] p-5 rounded-2xl text-center border border-[#34c759]/20">
+                                <div class="text-xs font-medium text-[#34c759]">Estimated Improvement</div>
+                                <div id="sim-risk-delta" class="text-3xl font-semibold text-[#34c759] mt-1 tracking-tight">--</div>
+                                <div class="text-[11px] text-[#34c759]/80 mt-0.5">Percentage point drop</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 bg-[#f5f5f7] p-4 rounded-2xl text-xs">
+                            <div>
+                                <div class="text-[#86868b]">Staff Retained:</div>
+                                <div id="sim-prevented-departures" class="text-base font-semibold text-[#1d1d1f] mt-0.5">--</div>
+                                <div class="text-[11px] text-[#86868b]">Departures prevented</div>
+                            </div>
+                            <div>
+                                <div class="text-[#86868b]">Turnover Savings:</div>
+                                <div id="sim-turnover-savings" class="text-base font-semibold text-[#34c759] mt-0.5">--</div>
+                                <div class="text-[11px] text-[#86868b]">Replacement costs avoided</div>
+                            </div>
+                            <div>
+                                <div class="text-[#86868b]">Net Financial ROI:</div>
+                                <div id="sim-net-roi" class="text-base font-semibold text-[#0071e3] mt-0.5">--</div>
+                                <div class="text-[11px] text-[#86868b]">Savings minus salary costs</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 bg-[#f5f5f7] rounded-xl text-xs text-[#86868b]">
+                        <strong class="text-[#1d1d1f]">Note:</strong> <span id="sim-disclaimer">Model-based projection, not a guaranteed outcome.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: HR APPROVALS -->
+        <section id="tab-actions" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">HR Approvals & Task Queue</h1>
+                <p class="text-sm text-[#86868b] mt-1">Review, approve, or modify recommended retention and compensation adjustments.</p>
+            </div>
+
+            <div class="apple-card overflow-hidden">
+                <div class="px-6 py-4 border-b border-[rgba(0,0,0,0.06)] flex justify-between items-center bg-white">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">Pending Recommendations</span>
+                    <span class="text-xs text-[#86868b]">Human-in-the-Loop Governance</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="apple-table">
+                        <thead>
+                            <tr>
+                                <th>Action ID</th>
+                                <th>Proposed Plan</th>
+                                <th>Target Staff / Team</th>
+                                <th>Priority</th>
+                                <th>Expected Benefit</th>
+                                <th>Status</th>
+                                <th>Decision</th>
+                            </tr>
+                        </thead>
+                        <tbody id="actions-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="apple-card overflow-hidden">
+                <div class="px-6 py-4 border-b border-[rgba(0,0,0,0.06)] flex justify-between items-center bg-white">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">Decision Audit History</span>
+                    <span class="text-xs text-[#86868b]">Immutable Record</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="apple-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Event Type</th>
+                                <th>Authorized By</th>
+                                <th>Summary</th>
+                                <th>System Version</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: ASSISTANT & SEARCH -->
+        <section id="tab-command" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">HR Assistant & Search</h1>
+                <p class="text-sm text-[#86868b] mt-1">Ask questions about workforce risks, compensation parity, or team dependencies.</p>
+            </div>
+
+            <div class="apple-card p-6 space-y-4">
+                <div class="flex gap-3">
+                    <input id="command-input" type="text" placeholder="e.g. Why is Engineering showing increased attrition?" class="apple-input">
+                    <button id="command-submit-btn" class="apple-btn-primary px-6">Ask</button>
+                </div>
+
+                <div>
+                    <div class="text-xs text-[#86868b] mb-2 font-medium">Suggested Inquiries:</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="preset-cmd-btn apple-btn-secondary text-xs" data-cmd="Why is Engineering showing increased attrition?">"Why is Engineering showing increased attrition?"</button>
+                        <button class="preset-cmd-btn apple-btn-secondary text-xs" data-cmd="Which departments currently have the highest workforce risk?">"Which departments have highest risk?"</button>
+                        <button class="preset-cmd-btn apple-btn-secondary text-xs" data-cmd="Which employees have skills suitable for internal mobility?">"Candidates for promotion / mobility?"</button>
+                        <button class="preset-cmd-btn apple-btn-secondary text-xs" data-cmd="What skills will we lack if we expand our AI team?">"What skills will we lack if we expand AI team?"</button>
+                    </div>
+                </div>
+
+                <div id="command-output-area" class="hidden">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: RECRUITMENT & INTERVIEWS -->
+        <section id="tab-talent" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Recruitment & Interviews</h1>
+                <p class="text-sm text-[#86868b] mt-1">Objective applicant qualification ranking and structured STAR interview evaluation.</p>
+            </div>
+
+            <div class="apple-card p-4 flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <label class="text-xs font-medium text-[#86868b]">Select Requisition:</label>
+                    <select id="talent-posting-select" class="apple-input text-xs py-1.5 px-3 w-auto">
+                        <!-- Populated via JS -->
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <input id="anonymize-toggle" type="checkbox" class="rounded text-[#0071e3] focus:ring-0">
+                    <label for="anonymize-toggle" class="text-xs font-medium text-[#1d1d1f] cursor-pointer">Blind Screening Mode (Mask names to minimize unconscious bias)</label>
+                </div>
+            </div>
+
+            <div id="candidates-rank-cards" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Populated via JS -->
+            </div>
+
+            <!-- STAR Interview Evaluator -->
+            <div class="apple-card p-6 space-y-4">
+                <div class="border-b border-[rgba(0,0,0,0.06)] pb-3">
+                    <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Structured Interview Response Evaluator</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-[#86868b] mb-1">Target Position:</label>
+                        <input id="interview-role-input" type="text" value="Senior Distributed Systems Engineer" class="apple-input text-xs py-2 mb-2">
+                        <button id="interview-gen-btn" class="apple-btn-primary text-xs">Generate Interview Questions</button>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-[#86868b] mb-1">Select Question:</label>
+                        <select id="interview-questions-select" class="apple-input text-xs py-2 mb-2">
+                            <!-- Populated via JS -->
+                        </select>
+                        <div class="text-xs text-[#86868b] bg-[#f5f5f7] p-2.5 rounded-xl">
+                            <strong>Criteria:</strong> <span id="interview-criteria-display">Look for STAR framework: Situation, Task, Action, and quantifiable Result.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-xs font-medium text-[#86868b]">Candidate Response:</label>
+                        <div class="flex gap-2 text-xs">
+                            <button id="fill-strong-answer" class="text-[#0071e3] hover:underline">Insert Sample Strong Answer</button>
+                            <span class="text-[#86868b]">|</span>
+                            <button id="fill-weak-answer" class="text-[#ff3b30] hover:underline">Insert Sample Weak Answer</button>
+                        </div>
+                    </div>
+                    <textarea id="interview-answer-input" rows="4" class="apple-input text-xs leading-relaxed" placeholder="Type or paste candidate response here..."></textarea>
+                </div>
+
+                <button id="interview-eval-btn" class="apple-btn-primary">Evaluate Response</button>
+
+                <div id="interview-scorecard-area" class="hidden">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: PERFORMANCE 9-BOX -->
+        <section id="tab-performance" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Performance & 9-Box Matrix</h1>
+                <p class="text-sm text-[#86868b] mt-1">Calibrate talent across Performance and Potential to identify leaders and coaching needs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 apple-card p-6 space-y-4">
+                    <div class="border-b border-[rgba(0,0,0,0.06)] pb-3">
+                        <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">9-Box Talent Grid (Click cell to filter roster)</h2>
+                    </div>
+
+                    <div class="apple-nine-box">
+                        <div class="apple-nine-box-cell bg-[#fffbf2]" data-quadrant="Enigma / Action Needed">
+                            <div>
+                                <div class="text-xs font-semibold text-[#ff9500]">Enigma / Action</div>
+                                <div class="text-[11px] text-[#86868b]">Low Perf × High Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#1d1d1f]">--</div>
+                        </div>
+                        <div class="apple-nine-box-cell bg-[#f5f9ff]" data-quadrant="High Potential Growth">
+                            <div>
+                                <div class="text-xs font-semibold text-[#0071e3]">High Growth</div>
+                                <div class="text-[11px] text-[#86868b]">Med Perf × High Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#1d1d1f]">--</div>
+                        </div>
+                        <div class="apple-nine-box-cell bg-[#f2fbf4] border-[#34c759]/30" data-quadrant="High Potential Star">
+                            <div>
+                                <div class="text-xs font-semibold text-[#34c759]">Star Talent</div>
+                                <div class="text-[11px] text-[#86868b]">High Perf × High Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#34c759]">--</div>
+                        </div>
+
+                        <div class="apple-nine-box-cell bg-[#fff2f1]" data-quadrant="Dilemma / Inconsistent">
+                            <div>
+                                <div class="text-xs font-semibold text-[#ff3b30]">Dilemma</div>
+                                <div class="text-[11px] text-[#86868b]">Low Perf × Med Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#1d1d1f]">--</div>
+                        </div>
+                        <div class="apple-nine-box-cell bg-white" data-quadrant="Core Contributor">
+                            <div>
+                                <div class="text-xs font-semibold text-[#1d1d1f]">Core Contributor</div>
+                                <div class="text-[11px] text-[#86868b]">Med Perf × Med Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#1d1d1f]">--</div>
+                        </div>
+                        <div class="apple-nine-box-cell bg-[#f2fbf4]" data-quadrant="High Performer">
+                            <div>
+                                <div class="text-xs font-semibold text-[#34c759]">High Performer</div>
+                                <div class="text-[11px] text-[#86868b]">High Perf × Med Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#1d1d1f]">--</div>
+                        </div>
+
+                        <div class="apple-nine-box-cell bg-[#fff2f1] border-[#ff3b30]/30" data-quadrant="Underperformer / PIP Candidate">
+                            <div>
+                                <div class="text-xs font-semibold text-[#ff3b30]">PIP Candidate</div>
+                                <div class="text-[11px] text-[#86868b]">Low Perf × Low Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#ff3b30]">--</div>
+                        </div>
+                        <div class="apple-nine-box-cell bg-white" data-quadrant="Effective Contributor">
+                            <div>
+                                <div class="text-xs font-semibold text-[#1d1d1f]">Effective</div>
+                                <div class="text-[11px] text-[#86868b]">Med Perf × Low Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#1d1d1f]">--</div>
+                        </div>
+                        <div class="apple-nine-box-cell bg-[#f5f9ff]" data-quadrant="Solid Professional">
+                            <div>
+                                <div class="text-xs font-semibold text-[#0071e3]">Solid Pro</div>
+                                <div class="text-[11px] text-[#86868b]">High Perf × Low Pot</div>
+                            </div>
+                            <div class="cell-count text-sm font-semibold text-[#1d1d1f]">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="apple-card p-6 space-y-4">
+                    <div class="border-b border-[rgba(0,0,0,0.06)] pb-3">
+                        <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Calibration Summary</h2>
+                    </div>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between text-[#86868b]">
+                            <span>Company Mean Rating:</span>
+                            <span id="perf-avg-score" class="font-semibold text-[#1d1d1f]">--</span>
+                        </div>
+                        <div class="flex justify-between text-[#86868b]">
+                            <span>High-Potential Candidates:</span>
+                            <span id="perf-hipo-count" class="font-semibold text-[#34c759]">--</span>
+                        </div>
+                        <div class="flex justify-between text-[#86868b]">
+                            <span>Coaching Candidates:</span>
+                            <span id="perf-coaching-count" class="font-semibold text-[#ff3b30]">--</span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 bg-[#f5f5f7] rounded-xl text-xs text-[#86868b]">
+                        <strong>Governance Note:</strong> Per Policy POL-PERF-2025, ratings under 2.5 trigger a 45-day structured mentorship plan.
+                    </div>
+                </div>
+            </div>
+
+            <div class="apple-card overflow-hidden">
+                <div class="px-6 py-4 border-b border-[rgba(0,0,0,0.06)] flex justify-between items-center bg-white">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-[#86868b]">Employee Performance Calibration Roster</span>
+                    <span class="text-xs text-[#86868b]">Click grid cells above to filter</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="apple-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Role</th>
+                                <th>Review Score</th>
+                                <th>9-Box Quadrant</th>
+                                <th>Promotion Readiness</th>
+                                <th>Recommended Pathway</th>
+                            </tr>
+                        </thead>
+                        <tbody id="perf-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 8: SKILLS & MOBILITY -->
+        <section id="tab-skills" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Skills & Internal Mobility</h1>
+                <p class="text-sm text-[#86868b] mt-1">Visualize company skill distribution, spot single-person dependencies, and calculate internal career paths.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 apple-card p-6 space-y-3">
+                    <div class="flex justify-between items-center border-b border-[rgba(0,0,0,0.06)] pb-3">
+                        <span class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Skills Distribution Graph</span>
+                        <div class="flex gap-3 text-xs">
+                            <span class="flex items-center gap-1.5 text-[#34c759]"><span class="h-2 w-2 rounded-full bg-[#34c759]"></span> Staff</span>
+                            <span class="flex items-center gap-1.5 text-[#0071e3]"><span class="h-2 w-2 rounded-full bg-[#0071e3]"></span> Skill</span>
+                            <span class="flex items-center gap-1.5 text-[#ff3b30]"><span class="h-2 w-2 rounded-full bg-[#ff3b30]"></span> Single Point</span>
+                        </div>
+                    </div>
+                    <canvas id="skillCanvas"></canvas>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="apple-card p-5 space-y-3">
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-[#ff3b30] border-b border-[rgba(0,0,0,0.06)] pb-2">Single-Point Skill Risks</h2>
+                        <div id="spof-alerts-container" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <div class="apple-card p-5 space-y-3">
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f] border-b border-[rgba(0,0,0,0.06)] pb-2">Department Skill Coverage</h2>
+                        <div id="dept-coverage-bars" class="space-y-2.5">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internal Mobility Pathfinder -->
+            <div class="apple-card p-6 space-y-4">
+                <div class="border-b border-[rgba(0,0,0,0.06)] pb-3">
+                    <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Internal Mobility & Career Progression Pathfinder</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-[#86868b] mb-1">Employee:</label>
+                        <input type="text" value="Elena Rostova (Senior Distributed Systems Engineer)" disabled class="apple-input text-xs bg-[#f5f5f7]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-[#86868b] mb-1">Desired Future Position:</label>
+                        <select id="mobility-target-role" class="apple-input text-xs">
+                            <option value="Lead Machine Learning Architect">Lead Machine Learning Architect</option>
+                            <option value="Cloud DevOps Specialist">Cloud DevOps Specialist</option>
+                            <option value="Lead People Partner">Lead People Partner</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="calc-mobility-btn" class="apple-btn-primary">Calculate Learning Pathway</button>
+
+                <div id="mobility-result-area" class="hidden">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 9: ONBOARDING -->
+        <section id="tab-onboarding" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">New Hire Onboarding Tracker</h1>
+                <p class="text-sm text-[#86868b] mt-1">Track 30-60-90 day milestone roadmaps across compliance, environment setup, and first deliverables.</p>
+            </div>
+
+            <div id="onboarding-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 10: POLICY HANDBOOK -->
+        <section id="tab-policy" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">HR Policy Handbook</h1>
+                <p class="text-sm text-[#86868b] mt-1">Instant policy lookup for leave, hybrid work, compensation rules, and health benefits with exact handbook citations.</p>
+            </div>
+
+            <div class="apple-card p-6 space-y-4">
+                <div class="flex gap-3">
+                    <input id="policy-search-input" type="text" placeholder="e.g. What is the paid parental leave duration?" class="apple-input">
+                    <button id="policy-search-btn" class="apple-btn-primary px-6">Search</button>
+                </div>
+
+                <div>
+                    <div class="text-xs text-[#86868b] mb-2 font-medium">Common Inquiries:</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="preset-policy-btn apple-btn-secondary text-xs" data-query="What is the parental leave duration?">"Parental leave duration"</button>
+                        <button class="preset-policy-btn apple-btn-secondary text-xs" data-query="What is the home workstation ergonomic stipend amount?">"Home workstation stipend"</button>
+                        <button class="preset-policy-btn apple-btn-secondary text-xs" data-query="What triggers a formal Performance Improvement Plan?">"PIP triggers & duration"</button>
+                        <button class="preset-policy-btn apple-btn-secondary text-xs" data-query="Can I bring my pet kangaroo to the office?">"Non-existent policy check"</button>
+                    </div>
+                </div>
+
+                <div id="policy-results-area" class="hidden">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 11: SYSTEM HEALTH -->
+        <section id="tab-governance" class="tab-content hidden space-y-6">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">System Health & Compliance</h1>
+                <p class="text-sm text-[#86868b] mt-1">Database integrity audits, model performance telemetry on GPU, and recruitment fairness ratios.</p>
+            </div>
+
+            <div class="apple-card p-6 space-y-4">
+                <div class="border-b border-[rgba(0,0,0,0.06)] pb-3 flex justify-between items-center">
+                    <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Model Performance Telemetry</h2>
+                    <span id="mlops-device" class="text-xs font-semibold text-[#34c759]">--</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-6 gap-3 text-center">
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Accuracy</div>
+                        <div id="mlops-accuracy" class="text-xl font-semibold text-[#1d1d1f] mt-1">--</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Precision</div>
+                        <div id="mlops-precision" class="text-xl font-semibold text-[#1d1d1f] mt-1">--</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Recall</div>
+                        <div id="mlops-recall" class="text-xl font-semibold text-[#1d1d1f] mt-1">--</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">F1 Score</div>
+                        <div id="mlops-f1" class="text-xl font-semibold text-[#1d1d1f] mt-1">--</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">ROC-AUC</div>
+                        <div id="mlops-roc-auc" class="text-xl font-semibold text-[#0071e3] mt-1">--</div>
+                    </div>
+                    <div class="bg-[#f5f5f7] p-4 rounded-2xl">
+                        <div class="text-[11px] text-[#86868b]">Latency</div>
+                        <div id="mlops-latency" class="text-xl font-semibold text-[#34c759] mt-1">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="apple-card p-6 space-y-4">
+                    <div class="border-b border-[rgba(0,0,0,0.06)] pb-3 flex justify-between items-center">
+                        <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Database Quality Score</h2>
+                        <span id="dq-status" class="apple-badge apple-badge-green">Healthy</span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 text-center bg-[#f5f5f7] p-4 rounded-2xl text-xs">
+                        <div>
+                            <div class="text-[#86868b]">Quality Score</div>
+                            <div id="dq-score" class="text-lg font-semibold text-[#34c759] mt-0.5">--</div>
+                        </div>
+                        <div>
+                            <div class="text-[#86868b]">Missing Values</div>
+                            <div id="dq-missing" class="text-lg font-semibold text-[#1d1d1f] mt-0.5">--</div>
+                        </div>
+                        <div>
+                            <div class="text-[#86868b]">Duplicate IDs</div>
+                            <div id="dq-duplicates" class="text-lg font-semibold text-[#1d1d1f] mt-0.5">--</div>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-[#86868b]">
+                        Last Validated: <span id="dq-last-check" class="text-[#1d1d1f] font-mono">--</span>
+                    </div>
+                </div>
+
+                <div class="apple-card p-6 space-y-4">
+                    <div class="border-b border-[rgba(0,0,0,0.06)] pb-3 flex justify-between items-center">
+                        <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Hiring Fairness Monitor</h2>
+                        <span id="fair-status" class="apple-badge apple-badge-green">Compliant</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-center bg-[#f5f5f7] p-4 rounded-2xl text-xs">
+                        <div>
+                            <div class="text-[#86868b]">Demographic Parity</div>
+                            <div id="fair-parity-score" class="text-lg font-semibold text-[#0071e3] mt-0.5">--</div>
+                        </div>
+                        <div>
+                            <div class="text-[#86868b]">Adverse Impact Ratio</div>
+                            <div id="fair-adverse-ratio" class="text-lg font-semibold text-[#34c759] mt-0.5">--</div>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-[#86868b]">
+                        <strong>EEOC 4/5ths Rule:</strong> Selection rate ratios maintained above standard 0.80 threshold.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Clean Apple Minimalist Footer -->
+    <footer class="w-full border-t border-[rgba(0,0,0,0.08)] bg-white text-xs text-[#86868b] py-4 px-8 flex justify-between items-center mt-12">
+        <div>Atlas • Your 24/7 Autonomous People Operations Partner</div>
+        <div>Based on Lia Marthalia (2022) • Cherrington (1995) • NVIDIA CUDA Acceleration</div>
+    </footer>
+
+    <script src="./static/js/mock_provider.js"></script>
+    <script src="./static/js/app.js"></script>
+</body>
+</html>
