@@ -5,6 +5,7 @@ from backend.app.routes.talent_routes import router as talent_router
 from backend.app.routes.employee_routes import router as employee_router
 from backend.app.routes.policy_routes import router as policy_router
 from backend.app.routes.auth_routes import router as auth_router
+from backend.app.routes.agent_routes import agent_router
 
 __all__ = [
     "dashboard_router",
@@ -13,5 +14,6 @@ __all__ = [
     "talent_router",
     "employee_router",
     "policy_router",
-    "auth_router"
+    "auth_router",
+    "agent_router"
 ]

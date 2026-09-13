@@ -1,15 +1,17 @@
-# WorkSight AI
+# Atlas
 
-### AI-Powered Workforce Intelligence & Decision Platform
-**Tagline**: *Understand. Predict. Act.*
+### Your 24/7 Autonomous People Operations Partner
+**Tagline**: *Your 24/7 Autonomous People Operations Partner.*
+
+**Live Interactive Demo**: [https://tarun1790.github.io/automation-of-people-operations-partner/](https://tarun1790.github.io/automation-of-people-operations-partner/)
 
 ---
 
 ## 1. Executive Overview
 
-**WorkSight AI** is an enterprise-grade workforce intelligence and decision-support platform that unifies fragmented HR data into an explainable, predictive reasoning layer. Rather than operating as an isolated HR chatbot or disconnected dashboard, WorkSight AI establishes a closed-loop intelligence cycle:
+**Atlas** is an enterprise-grade autonomous people operations platform that unifies fragmented HR data into an explainable, self-operating intelligence and decision layer. Operating continuously in the background, Atlas transforms workforce management from a series of manual tasks into a closed-loop autonomous system:
 
-$$\text{Data} \longrightarrow \text{Correlation} \longrightarrow \text{Detection} \longrightarrow \text{Explanation} \longrightarrow \text{Prediction} \longrightarrow \text{Recommendation} \longrightarrow \text{Simulation} \longrightarrow \text{Human Approval} \longrightarrow \text{Action} \longrightarrow \text{Outcome Monitoring}$$
+$$\text{Data} \longrightarrow \text{Correlation} \longrightarrow \text{Detection} \longrightarrow \text{Explanation} \longrightarrow \text{Prediction} \longrightarrow \text{Recommendation} \longrightarrow \text{Simulation} \longrightarrow \text{Auto-Execution} \longrightarrow \text{Outcome Monitoring}$$
 
 ### Foundational Academic Grounding
 The platform architecture is directly mapped to foundational human resource management research by **Lia Marthalia (2022)** (*The Importance of Human Resources (HR) Management in Company*, *Journal of World Science*, Vol 1 No. 9, pp. 700-705) and **Cherrington's (1995)** seven core HR functions:
@@ -25,7 +27,7 @@ The platform architecture is directly mapped to foundational human resource mana
 
 ## 2. Core Architecture & Architectural Separation
 
-WorkSight AI enforces strict separation between three core layers:
+Atlas enforces strict separation between three core layers:
 
 | Layer | Question Answered | Implementation | Example Output |
 | :--- | :--- | :--- | :--- |

@@ -31,6 +31,35 @@ class AuditAndActionService:
         db.refresh(log_entry)
         return log_entry
 
+    def create_action(
+        self,
+        db: Session,
+        title: str,
+        action_type: str,
+        target_entity: str,
+        description: str,
+        expected_impact: str,
+        priority: str = "High",
+        recommendation_id: Optional[int] = None
+    ) -> HRAction:
+        action = HRAction(
+            recommendation_id=recommendation_id,
+            title=title,
+            action_type=action_type,
+            target_entity=target_entity,
+            reason=description,
+            evidence="Cross-source workforce signals and model inference.",
+            expected_impact=expected_impact,
+            priority=priority,
+            status="Pending Approval",
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
+        )
+        db.add(action)
+        db.commit()
+        db.refresh(action)
+        return action
+
     def review_action(
         self,
         db: Session,

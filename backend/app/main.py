@@ -13,7 +13,8 @@ from backend.app.routes import (
     talent_router,
     employee_router,
     policy_router,
-    auth_router
+    auth_router,
+    agent_router
 )
 
 # Initialize database schema
@@ -42,6 +43,7 @@ app.include_router(talent_router, prefix=API_PREFIX)
 app.include_router(employee_router, prefix=API_PREFIX)
 app.include_router(policy_router, prefix=API_PREFIX)
 app.include_router(auth_router, prefix=API_PREFIX)
+app.include_router(agent_router, prefix=API_PREFIX)
 
 # Static and UI Paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent

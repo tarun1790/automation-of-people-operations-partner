@@ -14,7 +14,8 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 CUDA_AVAILABLE = torch.cuda.is_available()
 GPU_NAME = torch.cuda.get_device_name(0) if CUDA_AVAILABLE else "CPU"
 
-APP_NAME = "TalentOS AI - Intelligent Workforce Management Platform"
+APP_NAME = "Atlas"
+APP_TAGLINE = "Your 24/7 Autonomous People Operations Partner."
 APP_VERSION = "2.4.0"
 API_PREFIX = "/api/v1"
 
