@@ -25,6 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGovernanceTelemetry();
     loadAgentStatus();
     loadAgentFeed();
+    loadExecutiveBriefing();
+
+    // Live continuous sentinel polling
+    setInterval(() => {
+        loadExecutiveBriefing();
+        loadAgentStatus();
+        loadAgentFeed();
+        loadDashboardSummary();
+    }, 15000);
 });
 
 // Navigation Handling
@@ -1283,3 +1292,95 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderChatStream();
 });
+
+// Autonomous IT Provisioning & Onboarding Handlers
+function fillPresetOnboard(name, role, dept, email) {
+    const nameEl = document.getElementById('onboard-name-input');
+    const roleEl = document.getElementById('onboard-role-input');
+    const deptEl = document.getElementById('onboard-dept-select');
+    const emailEl = document.getElementById('onboard-email-input');
+
+    if (nameEl) nameEl.value = name;
+    if (roleEl) roleEl.value = role;
+    if (deptEl) deptEl.value = dept;
+    if (emailEl) emailEl.value = email;
+}
+
+async function submitAutonomousOnboarding() {
+    const name = document.getElementById('onboard-name-input')?.value?.trim();
+    const role = document.getElementById('onboard-role-input')?.value?.trim();
+    const dept = document.getElementById('onboard-dept-select')?.value;
+    const email = document.getElementById('onboard-email-input')?.value?.trim();
+    const btn = document.getElementById('btn-submit-onboarding');
+
+    if (!name || !role) {
+        alert('Please specify candidate full name and role title.');
+        return;
+    }
+
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span>⚡ Provisioning Cloud & Mail...</span>';
+    btn.disabled = true;
+
+    try {
+        const res = await fetch(`${API_BASE}/agent/onboard-new-hire`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                candidate_name: name,
+                role_title: role,
+                department: dept,
+                personal_email: email
+            })
+        });
+        const data = await res.json();
+
+        // Populate Receipt Panel
+        const titleEl = document.getElementById('receipt-hire-title');
+        const timeEl = document.getElementById('receipt-timestamp');
+        const mailEl = document.getElementById('receipt-email');
+        const ssoEl = document.getElementById('receipt-sso');
+        const passEl = document.getElementById('receipt-password');
+        const lapEl = document.getElementById('receipt-laptop');
+        const courierEl = document.getElementById('receipt-courier');
+        const buddyEl = document.getElementById('receipt-buddy');
+        const panel = document.getElementById('onboarding-receipt-panel');
+
+        if (titleEl) titleEl.textContent = `Identity & Systems Provisioned for ${data.employee_name}`;
+        if (timeEl) timeEl.textContent = data.dispatch_timestamp || new Date().toLocaleTimeString();
+        if (mailEl) mailEl.textContent = data.corporate_email;
+        if (ssoEl) ssoEl.textContent = data.sso_username;
+        if (passEl) passEl.textContent = data.temporary_password;
+        if (lapEl) lapEl.textContent = data.hardware_and_stipend?.primary_laptop || 'Apple MacBook Pro 16" M3 Max';
+        if (courierEl) courierEl.textContent = data.hardware_and_stipend?.dispatch_status || 'Courier Dispatched (#WS-88392-US)';
+        if (buddyEl) buddyEl.textContent = data.assigned_buddy;
+
+        if (panel) {
+            panel.classList.remove('hidden');
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        loadAgentStatus();
+        loadAgentFeed();
+        loadHRActions();
+        loadAuditTrail();
+    } catch (err) {
+        console.error('Failed to provision new hire:', err);
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
+
+async function loadExecutiveBriefing() {
+    try {
+        const res = await fetch(`${API_BASE}/agent/briefing`);
+        const data = await res.json();
+        const el = document.getElementById('briefing-headline');
+        if (el && data.headline) {
+            el.textContent = `${data.headline} Operating under ${data.operating_mode}. Total financial savings secured: $${Number(data.financial_savings_secured_usd).toLocaleString()}.`;
+        }
+    } catch (err) {
+        console.error('Failed to load executive briefing:', err);
+    }
+}

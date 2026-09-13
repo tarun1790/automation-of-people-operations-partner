@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse, FileResponse
 from backend.app.config import APP_NAME, APP_VERSION, API_PREFIX, DEVICE, CUDA_AVAILABLE, GPU_NAME, FRAMEWORK_META
 from backend.app.database import engine, Base, SessionLocal
 from backend.app.services.seed_data import populate_database_if_empty
+from backend.app.services.sentinel_daemon import sentinel_daemon
 from backend.app.routes import (
     dashboard_router,
     simulation_router,
@@ -62,6 +63,11 @@ def startup_event():
         populate_database_if_empty(db)
     finally:
         db.close()
+    sentinel_daemon.start()
+
+@app.on_event("shutdown")
+def shutdown_event():
+    sentinel_daemon.stop()
 
 @app.get("/", response_class=HTMLResponse)
 def serve_index():

@@ -278,9 +278,16 @@
                 mode: mockState.agentMode,
                 status: "Idle",
                 last_patrol_time: "2026-09-13 18:00:00",
-                total_messages_processed: 8,
-                total_autonomous_actions: 14,
-                total_savings_secured_usd: 245000.0
+                total_messages_processed: 12,
+                total_autonomous_actions: mockState.audit.length + 8,
+                total_savings_secured_usd: 285000.0,
+                sentinel_daemon: {
+                    daemon_running: true,
+                    tick_count: 42,
+                    last_tick: new Date().toLocaleTimeString(),
+                    overnight_actions_count: 6,
+                    overnight_savings_usd: 192000.0
+                }
             });
         }
 
@@ -289,28 +296,171 @@
             return makeResponse({ success: true, current_mode: mockState.agentMode });
         }
 
+        if (u.includes('/agent/briefing')) {
+            return makeResponse({
+                date: new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+                agent_name: "Atlas",
+                tagline: "Your 24/7 Autonomous People Operations Partner",
+                operating_mode: "Auto-Pilot (Fully Autonomous)",
+                headline: "Good morning! Overnight, Atlas autonomously executed 4 workforce operations.",
+                financial_savings_secured_usd: 192000.0,
+                total_active_staff: 32,
+                workforce_health_score: 88.4,
+                critical_retention_risks: 3,
+                cherrington_functions: [
+                    { id: "staffing", name: "1. Staffing / Employment", academic_ref: "Cherrington (1995) §4.a", status: "Optimal", score: 94 },
+                    { id: "performance", name: "2. Performance Evaluation", academic_ref: "Cherrington (1995) §4.b", status: "Calibrated", score: 91 },
+                    { id: "compensation", name: "3. Compensation & Equity", academic_ref: "Cherrington (1995) §4.c", status: "Balanced", score: 89 },
+                    { id: "training", name: "4. Training & Development", academic_ref: "Cherrington (1995) §4.d", status: "Active", score: 92 },
+                    { id: "relations", name: "5. Employee Relations", academic_ref: "Cherrington (1995) §4.e", status: "Healthy", score: 95 },
+                    { id: "safety", name: "6. Safety & Health", academic_ref: "Cherrington (1995) §4.f", status: "Enforced", score: 86 },
+                    { id: "research", name: "7. Personnel Research", academic_ref: "Cherrington (1995) §4.g & Marthalia (2022)", status: "Empirical", score: 96 }
+                ],
+                marthalia_benefits: [
+                    { benefit: "Competent Talent Utilization", impact: "High skill-to-role matching index (94%)" },
+                    { benefit: "Productivity Proportionality", impact: "Zero understaffed shifts in core engineering" },
+                    { benefit: "Labor Needs Determination", impact: "Proactive 6-month capacity forecast established" },
+                    { benefit: "Employment Information Handling", impact: "Centralized, zero-leakage employee records" },
+                    { benefit: "Pre-Planning Research", impact: "Absenteeism root causes diagnosed prior to turnover" }
+                ],
+                strategic_recommendations: [
+                    "Authorize Elena Rostova's +6% market retention package to permanently lock in core engineering architecture.",
+                    "Review REQ-2025-01 top candidate Elena Rostova (92% blind match) for panel interview.",
+                    "Verify Day 14 onboarding progress for newly provisioned cloud architect Kavita Sharma."
+                ]
+            });
+        }
+
+        if (u.includes('/agent/sentinel/status')) {
+            return makeResponse({
+                daemon_running: true,
+                tick_count: 42,
+                last_tick: new Date().toLocaleTimeString(),
+                overnight_actions_count: 6,
+                overnight_savings_usd: 192000.0
+            });
+        }
+
+        if (u.includes('/agent/sentinel/tick')) {
+            return makeResponse({
+                tick_number: 43,
+                timestamp: new Date().toLocaleTimeString(),
+                findings: [
+                    { function: "Safety & Health", status: "Optimal", autonomous_action: "Verified overtime below 15h/mo limits" },
+                    { function: "Compensation", status: "Optimal", autonomous_action: "Compa-ratios aligned across bands" }
+                ]
+            });
+        }
+
+        if (u.includes('/agent/sentinel/research')) {
+            return makeResponse({
+                title: "Empirical Personnel Research & Absenteeism Analysis",
+                academic_foundation: "Cherrington (1995) §4.g & Lia Marthalia (2022)",
+                absenteeism_analysis: {
+                    overall_absence_rate_pct: 2.4,
+                    unplanned_absences_last_30d: 24,
+                    root_causes: [
+                        { cause: "Overtime Burnout Fatigue", contribution_pct: 58.0, description: "Staff logging >20h overtime show 4.2x higher absence rate.", intervention: "8h/mo overtime cap enforced." },
+                        { cause: "Commute Distance (>40km)", contribution_pct: 24.0, description: "Staff commuting >40km report 3.1x higher late arrival delays.", intervention: "2-day flexible remote policy applied." },
+                        { cause: "Dependent & Health Strains", contribution_pct: 18.0, description: "Unforeseen family responsibilities.", intervention: "Emergency backup care allowance." }
+                    ]
+                },
+                recruitment_reasonableness_audit: {
+                    procedure_rating: "High (92/100)",
+                    average_time_to_hire_days: 18.4,
+                    offer_acceptance_rate_pct: 91.2,
+                    blind_screening_fairness_delta: "+16.8% diversity pass-through"
+                },
+                workforce_dissatisfaction_matrix: {
+                    overall_satisfaction_score: 7.8,
+                    dissatisfaction_drivers: [
+                        { driver: "On-Call Pager Interruptions", impact_severity: "Critical", affected_roles: "DevOps & Cloud Systems" },
+                        { driver: "Compensation Below Band Median", impact_severity: "High", affected_roles: "Senior Software Engineers" },
+                        { driver: "Meeting Density > 20h/wk", impact_severity: "Moderate", affected_roles: "Product & Design" }
+                    ]
+                }
+            });
+        }
+
+        if (u.includes('/agent/onboard-new-hire')) {
+            const cleanName = (body.candidate_name || "Elena Rostova").trim();
+            const parts = cleanName.toLowerCase().split(' ');
+            const first = parts[0] || "new";
+            const last = parts.length > 1 ? parts[parts.length - 1] : "hire";
+            const corpEmail = `${first}.${last}@worksight.ai`;
+            const ssoUser = `${first[0]}${last}`;
+            const tempPass = `Welcome2026!${first.charAt(0).toUpperCase() + first.slice(1)}`;
+            const role = body.role_title || "Senior Engineer";
+            const dept = body.department || "Engineering";
+
+            mockState.audit.unshift({
+                id: Date.now(),
+                timestamp: new Date().toLocaleTimeString(),
+                event_type: "AutonomousOnboarding",
+                actor: "Atlas Autonomous Agent",
+                summary: `Autonomously provisioned ${corpEmail}, issued 6 cloud accounts, and dispatched MacBook Pro M3 Max for ${cleanName}.`,
+                model_version: "Atlas-v2.4"
+            });
+
+            return makeResponse({
+                status: "Success - Fully Automated",
+                employee_name: cleanName,
+                role_title: role,
+                department: dept,
+                corporate_email: corpEmail,
+                sso_username: ssoUser,
+                temporary_password: tempPass,
+                hardware_and_stipend: {
+                    primary_laptop: "Apple MacBook Pro 16-inch (Apple M3 Max, 36GB Unified Memory, 1TB SSD)",
+                    home_office_stipend_usd: 1200.0,
+                    dispatch_status: "Courier Dispatched (#WS-88392-US)"
+                },
+                assigned_buddy: dept === "Engineering" ? "Elena Rostova (Staff Systems Engineer)" : "Marcus Brody (Lead Product Partner)",
+                dispatch_timestamp: new Date().toLocaleTimeString()
+            });
+        }
+
         if (u.includes('/agent/feed')) {
             return makeResponse([
-                { id: "ACT-AUTO-1", timestamp: "2026-09-13 18:00:03", title: "Autonomous Onboarding: Kavita Sharma", summary: "Generated kavita.sharma@worksight.ai, provisioned 6 IT tools, authorized MacBook Pro M3 Max dispatch with $1,200 stipend.", savings_usd: 3500.0, status: "Executed" },
+                { id: "ACT-AUTO-1", timestamp: "2026-09-13 18:00:03", title: "Autonomous Onboarding: Kavita Sharma", summary: "Generated kavita.sharma@worksight.ai, provisioned 6 IT tools, authorized MacBook Pro M3 Max dispatch with $1,200 stipend.", savings_usd: 4200.0, status: "Executed" },
                 { id: "ACT-AUTO-2", timestamp: "2026-09-13 17:48:10", title: "Workload Rebalancing: Elena Rostova", summary: "Capped overtime at 8h/mo, simulated counterfactual salary parity (+6%), reducing flight risk to 18.2%.", savings_usd: 72000.0, status: "Executed" },
-                { id: "ACT-AUTO-3", timestamp: "2026-09-13 17:15:30", title: "Blind Resume Screening for REQ-2025-01", summary: "Ranked 3 candidates with demographic anonymization. Identified Elena Rostova as top 92.4% match.", savings_usd: 12000.0, status: "Executed" }
+                { id: "ACT-AUTO-3", timestamp: "2026-09-13 17:35:15", title: "Compensation Equity Calibration", summary: "Autonomously adjusted compa-ratio for Marcus Brody (+5.2%) per POL-COMP-2025.", savings_usd: 38000.0, status: "Executed" },
+                { id: "ACT-AUTO-4", timestamp: "2026-09-13 17:15:30", title: "Blind Resume Screening for REQ-2025-01", summary: "Ranked 3 candidates with demographic anonymization. Identified Elena Rostova as top 92.4% match.", savings_usd: 15000.0, status: "Executed" }
             ]);
         }
 
         if (u.includes('/agent/message')) {
             const msg = (body.message || "").toLowerCase();
             
+            if (msg.includes('briefing') || msg.includes('morning') || msg.includes('overnight') || msg.includes('summary')) {
+                return makeResponse({
+                    intent: "Executive Morning Briefing",
+                    agent_response: "Good morning! Overnight, Atlas autonomously executed 4 workforce operations under Auto-Pilot mode.\n• Financial Impact: Secured $192,000 in prevented turnover costs.\n• Workforce Health Score: 88.4/100 across 32 active personnel.\n• Cherrington 7-Function Status: Staffing (94%), Performance (91%), Compensation (89%), Training (92%), Relations (95%), Safety (86%), Research (96%).\n• Priority Recommendation: Authorize Elena Rostova's +6% market retention package to permanently lock in core engineering architecture."
+                });
+            }
+
+            if (msg.includes('absenteeism') || msg.includes('delays') || msg.includes('dissatisfaction') || msg.includes('research') || msg.includes('cherrington') || msg.includes('marthalia')) {
+                return makeResponse({
+                    intent: "Personnel Research Analysis",
+                    agent_response: "Per Cherrington (1995) §4.g and Lia Marthalia (2022), I evaluated company absenteeism and dissatisfaction:\n1. Unplanned Absences: 24 incidents (Rate: 2.4%).\n2. Primary Root Cause: Overtime Burnout Fatigue (58% contribution). Staff logging >20h overtime have a 4.2x higher absence rate.\n3. Intervention: Automated 8h/mo overtime cap enforced.\n4. Recruitment Reasonableness: 92/100 with +16.8% diversity pass-through via blind screening.\n5. Friction Driver: On-call pager interruptions in DevOps & Cloud Systems."
+                });
+            }
+
             if (msg.includes('onboard') || msg.includes('provision') || msg.includes('mail')) {
+                const candidateName = msg.includes('tariq') ? "Tariq Vance" : msg.includes('elena') ? "Elena Rostova" : "Kavita Sharma";
+                const role = msg.includes('tariq') ? "Senior Infrastructure Architect" : "Senior Cloud Architect";
+                const email = `${candidateName.toLowerCase().replace(' ', '.')}@worksight.ai`;
                 return makeResponse({
                     intent: "Autonomous Onboarding & IT Provisioning",
-                    agent_response: "I autonomously completed the full onboarding and IT provisioning pipeline for Kavita Sharma (Senior Cloud Architect):\n1. Company Email Generated: kavita.sharma@worksight.ai\n2. IT Accounts Active: Google Workspace, GitHub Enterprise, Slack (#engineering), Jira, Zero-Trust VPN\n3. Hardware Dispatched: Apple MacBook Pro 16-inch M3 Max with $1,200 home office stipend authorized\n4. 30-60-90 Day Roadmap Assigned: Paired with Elena Rostova (Staff Systems Engineer)\n5. Welcome Package & SSO Credentials dispatched to hire's inbox. Action #ACT-AUTO-1 recorded to audit log.",
+                    agent_response: `I autonomously completed the full onboarding and IT provisioning pipeline for ${candidateName} (${role}):\n1. Company Email Generated: ${email}\n2. IT Accounts Active: Google Workspace, GitHub Enterprise, Slack (#engineering), Jira, Zero-Trust VPN\n3. Hardware Dispatched: Apple MacBook Pro 16-inch M3 Max with $1,200 home office stipend authorized\n4. 30-60-90 Day Roadmap Assigned: Paired with Elena Rostova (Staff Systems Engineer)\n5. Welcome Package & SSO Credentials dispatched to hire's inbox. Action recorded to audit log.`,
                     provisioning_result: {
-                        corporate_email: "kavita.sharma@worksight.ai",
-                        sso_username: "ksharma",
-                        temporary_password: "Welcome2026!Kavita",
+                        corporate_email: email,
+                        sso_username: candidateName.charAt(0).toLowerCase() + candidateName.split(' ')[1].toLowerCase(),
+                        temporary_password: `Welcome2026!${candidateName.split(' ')[0]}`,
                         hardware_and_stipend: {
                             primary_laptop: "Apple MacBook Pro 16-inch (Apple M3 Max, 36GB, 1TB SSD)",
-                            home_office_stipend_usd: 1200.0
+                            home_office_stipend_usd: 1200.0,
+                            dispatch_status: "Courier Dispatched (#WS-88392-US)"
                         },
                         assigned_buddy: "Elena Rostova (Staff Systems Engineer)"
                     }
@@ -341,5 +491,5 @@
         return originalFetch.apply(this, arguments);
     };
 
-    console.log("Atlas Client-Side Mock Provider active for GitHub Pages deployment.");
+    console.log("Atlas 24/7 Autonomous Client-Side Mock Provider active for GitHub Pages deployment.");
 })();
