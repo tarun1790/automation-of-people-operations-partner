@@ -106,6 +106,93 @@
             ]);
         }
 
+        // 3.5 Cross-Source Multi-HR Data Reasoning Hub (Core Challenge)
+        if (u.includes('/dashboard/cross-source-reasoning')) {
+            return makeResponse({
+                engine: "Multi-Source Cross-Reasoning Engine",
+                challenge_focus: "System reasons over multiple HR data sources and recommends actions rather than simple chat.",
+                data_sources_integrated: [
+                    "Attendance & Overtime Tracking (Timekeeping)",
+                    "Payroll & Market Compa-Ratios (Compensation)",
+                    "Performance Reviews & Goal OKRs (Performance)",
+                    "HRIS Tenure & Promotion Trajectory (Career Pathing)",
+                    "PyTorch CUDA Neural Attrition Predictor (Risk Modeling)",
+                    "NetworkX Skill Graph Topology (Organizational Capabilities)"
+                ],
+                total_audited_staff: 32,
+                critical_vulnerabilities_detected: 1,
+                findings: [
+                    {
+                        employee_id: 1,
+                        employee_name: "Elena Rostova",
+                        department: "Engineering",
+                        role_title: "Senior Distributed Systems Engineer",
+                        pattern_identified: "Critical High-Performer Burnout & Market Deficit",
+                        flight_risk: 0.784,
+                        risk_tier: "CRITICAL",
+                        confidence: 88.0,
+                        evidence: [
+                            "Timekeeping: Overtime logging 32.4 hrs/month (exceeds safety cap of 15h)",
+                            "Payroll: Compa-ratio is 0.88 ($14,000 below peer market median)",
+                            "HRIS History: Promotion gap of 19 months without career progression",
+                            "Pulse Feedback: Engagement sentiment depressed at 6.1/10",
+                            "Performance Reviews: Historical evaluation remains strong (4.8/5.0) indicating core critical contributor"
+                        ],
+                        reasoning: "Cross-source analysis demonstrates multiple independent indicators pointing to severe operational burnout compounded by compensation dissatisfaction. High workload without recognition is eroding organizational affinity.",
+                        recommended_action: "1. Conduct immediate 15% salary calibration to match market benchmark ($162,000).\n2. Enforce on-call workload cap at 8h/mo.\n3. Schedule executive retention 1-on-1 with Department Head.",
+                        expected_impact: "Reduces attrition risk from 78% to <20%, prevents catastrophic distributed domain knowledge loss ($192,000 savings)."
+                    },
+                    {
+                        employee_id: 2,
+                        employee_name: "Marcus Brody",
+                        department: "Product & Design",
+                        role_title: "Lead Product Partner",
+                        pattern_identified: "High-Potential Succession & Promotion Readiness",
+                        flight_risk: 0.142,
+                        risk_tier: "LOW",
+                        confidence: 92.0,
+                        evidence: [
+                            "Performance Reviews: Top tier performance rating (4.7/5.0) and high potential classification (3/3)",
+                            "Goals / OKRs: Milestone delivery rate at 94.0%",
+                            "360 Feedback: High peer collaboration score (4.8/5.0)",
+                            "HRIS History: Tenure of 28 months with strong cross-functional mentoring contributions"
+                        ],
+                        reasoning: "Employee consistently demonstrates senior leadership competencies and exceeds operational targets. Current tenure and performance trajectory indicate prime window for advancement.",
+                        recommended_action: "Nominate for promotion to Group Product Director with 12% salary calibration.",
+                        expected_impact: "Secures product leadership succession and reinforces cultural excellence."
+                    }
+                ]
+            });
+        }
+
+        // 3.6 Natural Language AI Command Center
+        if (u.includes('/dashboard/command-center')) {
+            const q = (body.query || "").toLowerCase();
+            if (q.includes("highest") || q.includes("risk") || q.includes("department")) {
+                return makeResponse({
+                    query: body.query,
+                    tool_called: "risk_radar_service.scan_organization_risks",
+                    executive_summary: "Organization scan identifies **Engineering** as having the highest workforce risk (Risk Score: 78.4/100, Priority: High). Key drivers: Average monthly overtime of 28.5 hrs; Compa-ratio below market median.",
+                    evidence: { average_overtime: "28.5 hrs/mo", compa_ratio_median: 0.89, flight_risk_index: 0.72 },
+                    reasoning: "Synthesized aggregated attendance, compa-ratio, and flight risk scores across all departments.",
+                    confidence: 91.0,
+                    recommended_action: "Initiate immediate workload rebalancing and +6% salary parity adjustment.",
+                    expected_impact: "Proactively addresses department-wide attrition before key departures occur."
+                });
+            } else {
+                return makeResponse({
+                    query: body.query,
+                    tool_called: "cross_reasoning_engine.perform_cross_source_audit",
+                    executive_summary: "Engineering attrition vulnerability is primarily driven by compound correlation: 1) Sustained overtime exceeding 30 hrs/month, 2) Compa-ratios falling 15% below tech benchmarks, and 3) Critical single-point skill dependencies on core infrastructure (Kubernetes, Distributed Systems).",
+                    evidence: { critical_flight_risks: 1, overtime_violations: 3, spofs: 2 },
+                    reasoning: "Cross-correlated timekeeping, compensation bands, performance evaluations, and skill topology.",
+                    confidence: 89.0,
+                    recommended_action: "Execute Policy POL-COMP-2025 equity calibration and mandate 8h/mo overtime caps.",
+                    expected_impact: "Secures top technical talent and protects core architecture integrity."
+                });
+            }
+        }
+
         // 4. What-If Simulation
         if (u.includes('/simulation/simulate')) {
             const ot = body.overtime_delta_pct || -25;
@@ -174,6 +261,78 @@
             ]);
         }
 
+        // 8.5 Intelligent Interview Agent (Role Questions & STAR Evaluation)
+        if (u.includes('/talent/interviews/generate-questions')) {
+            const role = (body.role_title || "Senior Distributed Systems Engineer");
+            return makeResponse([
+                {
+                    question: `Describe a scenario in your experience as ${role} where a critical distributed production service experienced a severe latency spike or failure. How did you diagnose root cause and isolate the issue?`,
+                    category: "System Resiliency & Incident Response",
+                    competency: "Distributed Systems & Debugging",
+                    criteria: "Expects clear STAR framework: Situation, Task, Action (metrics, tracing, profiling), and quantifiable Result.",
+                    sample_follow_up: "What circuit-breaking or rate-limiting patterns did you introduce to prevent cascading failures?"
+                },
+                {
+                    question: "How do you design a zero-downtime database schema migration for a high-throughput table processing thousands of writes per second?",
+                    category: "Data Architecture & Scalability",
+                    competency: "Database Reliability & State Management",
+                    criteria: "Look for dual-write patterns, backward-compatible column addition, background backfills, and shadow read verification.",
+                    sample_follow_up: "How did you verify data consistency between old and new schemas before deprecation?"
+                },
+                {
+                    question: "Tell me about a time when you had a strong disagreement with a technical lead or product manager regarding architecture or timeline trade-offs. How did you navigate this?",
+                    category: "Behavioral & Conflict Resolution",
+                    competency: "Collaboration & Stakeholder Management",
+                    criteria: "STAR methodology: Focus on objective evidence, empathy, trade-off matrix evaluation, and team-first alignment.",
+                    sample_follow_up: "Looking back, what would you have communicated earlier to minimize friction?"
+                }
+            ]);
+        }
+
+        if (u.includes('/talent/interviews/evaluate-answer')) {
+            const ans = (body.candidate_answer || "").trim();
+            const isStrong = ans.length > 100 && (ans.includes("investigated") || ans.includes("latency") || ans.includes("validated") || ans.includes("Jaeger"));
+            if (isStrong) {
+                return makeResponse({
+                    overall_score: 92.5,
+                    technical_correctness_score: 94.0,
+                    relevance_score: 95.0,
+                    depth_score: 90.0,
+                    star_structure_score: 92.0,
+                    communication_score: 91.0,
+                    strengths: [
+                        "Exemplary STAR methodology structure (clear Situation, Task, Action, Result)",
+                        "Precise technical diagnostic tools referenced (Jaeger tracing, thread pool analysis)",
+                        "Quantifiable business outcome achieved (p99 latency dropped by 85% within 2 hours)"
+                    ],
+                    missing_aspects: [
+                        "Could expand on long-term automated chaos engineering testing"
+                    ],
+                    recommendation: "Strong Hire (Exceeds Technical Baseline)",
+                    hiring_risk: "Low Risk — Exceptional System Reasoning",
+                    next_step: "Proceed to System Architecture & Culture Panel"
+                });
+            } else {
+                return makeResponse({
+                    overall_score: 48.0,
+                    technical_correctness_score: 45.0,
+                    relevance_score: 50.0,
+                    depth_score: 40.0,
+                    star_structure_score: 42.0,
+                    communication_score: 55.0,
+                    strengths: ["Acknowledged the incident directly"],
+                    missing_aspects: [
+                        "Lacks STAR structure — no measurable actions or diagnostics detailed",
+                        "Superficial remediation (service restart without root-cause isolation)",
+                        "Zero mention of observability, alerting, or metrics"
+                    ],
+                    recommendation: "Hold / Candidate Did Not Meet Senior Standard",
+                    hiring_risk: "High Risk — Weak Production Troubleshooting",
+                    next_step: "Secondary screening or candidate rejection"
+                });
+            }
+        }
+
         // 9. Performance Matrix
         if (u.includes('/workforce/performance-matrix')) {
             return makeResponse({
@@ -230,6 +389,27 @@
             });
         }
 
+        // 10.5 Internal Mobility Pathfinder
+        if (u.includes('/workforce/mobility-path')) {
+            const target = (body.target_role || "Lead Cloud Solutions Architect");
+            return makeResponse({
+                employee_name: "Elena Rostova",
+                current_role: "Senior Distributed Systems Engineer",
+                target_role: target,
+                competency_match_pct: 78.5,
+                skill_gaps: [
+                    { skill: "Multi-Cloud FinOps & Cost Governance", priority: "High", estimated_weeks: 4 },
+                    { skill: "Enterprise TOGAF Architecture Patterns", priority: "Medium", estimated_weeks: 6 }
+                ],
+                recommended_curriculum: [
+                    "Advanced FinOps Cloud Architecture Cohort (Internal Track)",
+                    "Cross-functional shadow rotation with VP of Infrastructure"
+                ],
+                estimated_readiness_months: 3.5,
+                retention_impact: "Increases career longevity score by +38% and closes critical Cloud SPOF"
+            });
+        }
+
         // 11. Onboarding Journeys
         if (u.includes('/workforce/onboarding-journeys')) {
             return makeResponse([
@@ -246,6 +426,10 @@
                     tasks: mockState.tasks
                 }
             ]);
+        }
+
+        if (u.includes('/workforce/onboarding/task-toggle')) {
+            return makeResponse({ success: true, status: "Toggled" });
         }
 
         // 12. Policy Query
@@ -487,9 +671,94 @@
             });
         }
 
+        // 13. Workforce Employees Directory for Mobility
+        if (u.includes('/workforce/employees')) {
+            return makeResponse([
+                { id: 1, name: "Elena Rostova", role_title: "Senior Distributed Systems Engineer", department: "Engineering" },
+                { id: 2, name: "Kavita Sharma", role_title: "Senior Cloud Architect", department: "Engineering" },
+                { id: 3, name: "Marcus Vance", role_title: "Lead DevOps Specialist", department: "Engineering" },
+                { id: 4, name: "Sophia Chen", role_title: "Principal Machine Learning Engineer", department: "Data & AI" },
+                { id: 5, name: "Liam O'Connor", role_title: "Senior Product Manager", department: "Product & Design" },
+                { id: 6, name: "Aria Montgomery", role_title: "Lead People Partner", department: "People Operations" }
+            ]);
+        }
+
+        // 14. Operational Telemetry & Absenteeism Studio
+        if (u.includes('/dashboard/operational-telemetry')) {
+            return makeResponse({
+                operational_metrics: {
+                    staffing_capacity: { value: "94.1%", status: "Optimal", detail: "32 active / 2 open" },
+                    performance_fit: { value: "91.8%", status: "Optimal", detail: "9-Box Calibrated" },
+                    compensation_compa: { value: "0.99", status: "Benchmark", detail: "Target: 1.00" },
+                    upskilling_rate: { value: "92.4%", status: "Active", detail: "Skill Coverage" },
+                    relations_pulse: { value: "7.9/10", status: "Healthy", detail: "Pulse Index" },
+                    safety_overtime: { value: "Active", status: "Enforced", detail: "8h/mo Cap Enforced" },
+                    absence_rate: { value: "2.1%", status: "Low", detail: "Industry: 3.5%" }
+                },
+                absenteeism_drivers: {
+                    overall_absence_rate: "2.1%",
+                    drivers: [
+                        {
+                            title: "Overtime Burnout Fatigue",
+                            impact_pct: "56% Impact",
+                            description: "Staff logging >15h monthly overtime show a 3.8x higher incidence of unplanned fatigue absences.",
+                            intervention: "8h/mo overtime cap and automated rebalancing enforced"
+                        },
+                        {
+                            title: "Commute Distance (>35km)",
+                            impact_pct: "26% Impact",
+                            description: "Staff commuting >35km report 2.9x higher traffic delay rates.",
+                            intervention: "2-day flexible remote schedule applied"
+                        },
+                        {
+                            title: "Dependent & Health Strains",
+                            impact_pct: "18% Impact",
+                            description: "Unforeseen family care obligations and health appointments.",
+                            intervention: "Emergency backup family care benefit active"
+                        }
+                    ]
+                },
+                recruitment_audit: {
+                    score: 94,
+                    time_to_hire_days: 18.2,
+                    industry_avg_days: 34.0,
+                    offer_acceptance_rate: 91.8,
+                    blind_screening_delta: "+17.4%",
+                    procedural_reasonableness: "High (Verified Bias-Free)",
+                    finding: "Anonymized technical screening boosts candidate trust and shortens drop-off across all departments."
+                },
+                dissatisfaction_analysis: {
+                    index: "7.9 / 10.0",
+                    drivers: [
+                        {
+                            rank: 1,
+                            title: "On-Call Pager Interruptions",
+                            impact: "High Severity",
+                            description: "Cloud & Systems engineers report disrupted sleep cycles during peak release windows.",
+                            color: "text-[#ff3b30]"
+                        },
+                        {
+                            rank: 2,
+                            title: "Salary Below Peer Band",
+                            impact: "Medium Severity",
+                            description: "Compa-ratio deficit causes perceived inequity in Mid/Senior bands.",
+                            color: "text-[#ff9500]"
+                        },
+                        {
+                            rank: 3,
+                            title: "Meeting Density Fragmentation",
+                            impact: "Operational",
+                            description: "Cross-functional synchronization exceeds 18h/week in Product and Systems teams.",
+                            color: "text-[#1d1d1f]"
+                        }
+                    ]
+                },
+                timestamp: "Real-time dynamic synthesis"
+            });
+        }
+
         // Fallback to real fetch if unhandled
         return originalFetch.apply(this, arguments);
     };
-
-    console.log("Atlas 24/7 Autonomous Client-Side Mock Provider active for GitHub Pages deployment.");
 })();
+
