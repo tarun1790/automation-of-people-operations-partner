@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkSight AI - Workforce Intelligence & Decision Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex flex-col font-sans selection:bg-indigo-600 selection:text-white">
+
+    <!-- Top Global Header -->
+    <header class="border-b border-gray-800 bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="h-9 w-9 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <span class="font-bold text-lg text-white font-mono">W</span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-lg font-extrabold tracking-tight text-white">WorkSight <span class="text-indigo-400">AI</span></h1>
+                        <span class="text-[11px] font-mono bg-indigo-950 text-indigo-300 border border-indigo-700/50 px-2 py-0.5 rounded-full font-semibold">v2.4-CUDA</span>
+                    </div>
+                    <p class="text-[11px] text-gray-400 font-medium tracking-wide">AI-Powered Workforce Intelligence & Decision Platform • <em class="text-gray-300 not-italic">Understand. Predict. Act.</em></p>
+                </div>
+            </div>
+
+            <!-- Hardware & Governance Badges -->
+            <div class="hidden md:flex items-center gap-3">
+                <div class="flex items-center gap-1.5 px-2.5 py-1 bg-gray-900 border border-emerald-500/40 rounded-md text-[11px] font-mono text-emerald-400">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>NVIDIA RTX 3070 Ti (CUDA Active)</span>
+                </div>
+                <div class="flex items-center gap-1.5 px-2.5 py-1 bg-gray-900 border border-indigo-500/40 rounded-md text-[11px] text-indigo-300">
+                    <span>Grounded in Lia Marthalia (2022)</span>
+                </div>
+                <div class="flex items-center gap-2 pl-2 border-l border-gray-800">
+                    <div class="h-7 w-7 rounded-full bg-gray-800 flex items-center justify-center font-bold text-xs text-indigo-400 border border-gray-700">SJ</div>
+                    <div class="text-left leading-tight">
+                        <div class="text-xs font-semibold text-white">Sarah Jenkins</div>
+                        <div class="text-[10px] text-gray-400 font-mono">HR Director</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Primary Subnav Tabs -->
+        <div class="bg-[#0b0f19]/90 border-t border-gray-800/60 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 flex gap-1 py-1.5 text-xs font-medium">
+                <button data-tab="dashboard" class="px-3 py-1.5 rounded-md bg-indigo-600 text-white font-semibold transition">Executive Dashboard</button>
+                <button data-tab="command" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">AI Command Center</button>
+                <button data-tab="simulation" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">What-If Simulator</button>
+                <button data-tab="actions" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">HR Action Center & Audit</button>
+                <button data-tab="attrition" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">Workforce Risk & Attrition</button>
+                <button data-tab="talent" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">Talent & Interviews</button>
+                <button data-tab="performance" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">Performance 9-Box</button>
+                <button data-tab="skills" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">Skill Graph & Mobility</button>
+                <button data-tab="onboarding" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">Adaptive Onboarding</button>
+                <button data-tab="policy" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">Policy Intelligence</button>
+                <button data-tab="governance" class="px-3 py-1.5 rounded-md text-gray-300 hover:bg-gray-800 transition">MLOps & Fairness</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+        <!-- TAB 1: EXECUTIVE DASHBOARD -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            <!-- Answers: "What is happening in my workforce right now?" -->
+            <div>
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white tracking-tight">Workforce Health Overview</h2>
+                        <p class="text-xs text-gray-400">Near-real-time executive summary synthesizing multiple HR data sources across the enterprise lifecycle.</p>
+                    </div>
+                    <div class="flex gap-2 text-xs">
+                        <span class="px-2.5 py-1 bg-gray-900 border border-gray-700 rounded text-gray-300 font-mono">Dataset: 32 Normalized Entities</span>
+                        <button onclick="loadDashboardSummary(); loadRiskRadar(); loadAIInsights();" class="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded font-medium transition">Refresh Telemetry</button>
+                    </div>
+                </div>
+
+                <!-- Top Metric Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+                    <div class="glass-card p-3">
+                        <div class="text-[11px] text-gray-400">Total Headcount</div>
+                        <div id="metric-total-emps" class="text-xl font-extrabold text-white font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-indigo-400 mt-0.5">6 Active Depts</div>
+                    </div>
+                    <div class="glass-card p-3 border-rose-500/30">
+                        <div class="text-[11px] text-gray-400">High-Risk Emps</div>
+                        <div id="metric-high-risk" class="text-xl font-extrabold text-rose-400 font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-rose-300/80 mt-0.5">Elevated Flight Risk</div>
+                    </div>
+                    <div class="glass-card p-3 border-emerald-500/30">
+                        <div class="text-[11px] text-gray-400">Health Index</div>
+                        <div id="metric-health-index" class="text-xl font-extrabold text-emerald-400 font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-emerald-300/80 mt-0.5">Organizational Score</div>
+                    </div>
+                    <div class="glass-card p-3">
+                        <div class="text-[11px] text-gray-400">Avg Performance</div>
+                        <div id="metric-avg-perf" class="text-xl font-extrabold text-white font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-gray-400 mt-0.5">Goal Completion 84%</div>
+                    </div>
+                    <div class="glass-card p-3">
+                        <div class="text-[11px] text-gray-400">Open Positions</div>
+                        <div id="metric-open-pos" class="text-xl font-extrabold text-indigo-400 font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-indigo-300 mt-0.5">Target Staffing</div>
+                    </div>
+                    <div class="glass-card p-3">
+                        <div class="text-[11px] text-gray-400">Skill Coverage</div>
+                        <div id="metric-skill-cov" class="text-xl font-extrabold text-white font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-gray-400 mt-0.5">Ontology Health</div>
+                    </div>
+                    <div class="glass-card p-3 border-amber-500/30">
+                        <div class="text-[11px] text-gray-400">Pending Actions</div>
+                        <div id="metric-pending-actions" class="text-xl font-extrabold text-amber-400 font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-amber-300 mt-0.5">Needs HR Review</div>
+                    </div>
+                    <div class="glass-card p-3 border-rose-500/30">
+                        <div class="text-[11px] text-gray-400">Critical SPOFs</div>
+                        <div id="metric-spofs" class="text-xl font-extrabold text-rose-400 font-mono mt-0.5">--</div>
+                        <div class="text-[10px] text-rose-300 mt-0.5">Single Skill Points</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workforce Risk Radar -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <span class="h-2.5 w-2.5 rounded-full bg-rose-500 animate-ping"></span>
+                        <span>Workforce Risk Radar (Early Warning Monitor)</span>
+                    </h3>
+                    <span class="text-xs text-gray-400 font-mono">Continuous anomaly detection across overtime, absenteeism, compa-ratios, and sentiment</span>
+                </div>
+                <div id="risk-radar-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dynamic Department Risk Cards -->
+                </div>
+            </div>
+
+            <!-- Standardized AI Insight Cards -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-white">Actionable Cross-Source AI Insights</h3>
+                    <span class="text-xs text-indigo-400">Correlated multi-factor signals with confidence and human review triggers</span>
+                </div>
+                <div id="ai-insights-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Dynamic Insight Cards -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: AI COMMAND CENTER -->
+        <section id="tab-command" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">AI Command Center (Natural Language Reasoning Interface)</h2>
+                <p class="text-xs text-gray-400">Interact with the workforce intelligence engine using natural language queries. Powered by structured tool dispatching rather than ungrounded generation.</p>
+            </div>
+
+            <!-- Interactive Query Box -->
+            <div class="glass-card p-5 space-y-4">
+                <div class="flex gap-2">
+                    <input id="command-input" type="text" placeholder="e.g. Why is Engineering showing increased attrition?" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500">
+                    <button id="command-submit-btn" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-md transition">Ask Reasoner</button>
+                </div>
+
+                <!-- Suggested Query Chips -->
+                <div>
+                    <div class="text-xs text-gray-400 mb-2 font-medium">Suggested Strategic Queries:</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="preset-cmd-btn px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-full text-xs text-gray-300 transition" data-cmd="Why is Engineering showing increased attrition?">"Why is Engineering showing increased attrition?"</button>
+                        <button class="preset-cmd-btn px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-full text-xs text-gray-300 transition" data-cmd="Which departments currently have the highest workforce risk?">"Which departments currently have the highest workforce risk?"</button>
+                        <button class="preset-cmd-btn px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-full text-xs text-gray-300 transition" data-cmd="Which employees have skills suitable for internal mobility?">"Which employees have skills suitable for internal mobility?"</button>
+                        <button class="preset-cmd-btn px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-full text-xs text-gray-300 transition" data-cmd="What skills will we lack if we expand our AI team?">"What skills will we lack if we expand our AI team?"</button>
+                    </div>
+                </div>
+
+                <div id="command-output-area" class="hidden">
+                    <!-- Dynamic Output -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: WHAT-IF SCENARIO SIMULATOR -->
+        <section id="tab-simulation" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">What-If Counterfactual Scenario Simulator</h2>
+                <p class="text-xs text-gray-400">Simulate the impact of policy and workload changes on projected workforce attrition and financial ROI using calibrated perturbation models.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Controls Column -->
+                <div class="glass-card p-5 space-y-5">
+                    <h3 class="text-sm font-bold text-white border-b border-gray-800 pb-2">Policy Intervention Levers</h3>
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Target Department:</label>
+                        <select id="sim-dept-select" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-xs text-white">
+                            <option value="Engineering">Engineering</option>
+                            <option value="Product & Design">Product & Design</option>
+                            <option value="Data & AI">Data & AI</option>
+                            <option value="Sales & Marketing">Sales & Marketing</option>
+                            <option value="People Operations">People Operations</option>
+                            <option value="All">Entire Organization (All Departments)</option>
+                        </select>
+                    </div>
+
+                    <!-- Overtime Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs text-gray-300 mb-1">
+                            <span>Overtime Adjustment:</span>
+                            <span id="sim-overtime-val" class="font-mono font-bold text-indigo-400">-25.0%</span>
+                        </div>
+                        <input id="sim-overtime-slider" type="range" min="-40" max="0" value="-25" step="5">
+                        <div class="text-[10px] text-gray-500 mt-1">Cap on-call shifts and rebalance workload</div>
+                    </div>
+
+                    <!-- Salary Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs text-gray-300 mb-1">
+                            <span>Compensation Alignment:</span>
+                            <span id="sim-salary-val" class="font-mono font-bold text-indigo-400">+5.0%</span>
+                        </div>
+                        <input id="sim-salary-slider" type="range" min="0" max="15" value="5" step="1">
+                        <div class="text-[10px] text-gray-500 mt-1">Targeted base salary calibration vs market 75th percentile</div>
+                    </div>
+
+                    <!-- Promotion Acceleration Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs text-gray-300 mb-1">
+                            <span>Promotion Acceleration:</span>
+                            <span id="sim-promo-val" class="font-mono font-bold text-indigo-400">6 mos</span>
+                        </div>
+                        <input id="sim-promo-slider" type="range" min="0" max="12" value="6" step="2">
+                        <div class="text-[10px] text-gray-500 mt-1">Advance high-potential talent promotion windows</div>
+                    </div>
+
+                    <!-- Added Staffing Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs text-gray-300 mb-1">
+                            <span>Additional Staffing Support:</span>
+                            <span id="sim-staff-val" class="font-mono font-bold text-indigo-400">+2</span>
+                        </div>
+                        <input id="sim-staff-slider" type="range" min="0" max="8" value="2" step="1">
+                        <div class="text-[10px] text-gray-500 mt-1">Directly absorbs department on-call and sprint capacity</div>
+                    </div>
+                </div>
+
+                <!-- Simulation Results Column -->
+                <div class="lg:col-span-2 glass-card p-5 space-y-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-2 mb-4">
+                            <h3 class="text-sm font-bold text-white">Projected Workforce Impact & Financial ROI</h3>
+                            <span class="text-xs text-emerald-400 font-mono font-semibold">Calibrated Neural Prediction</span>
+                        </div>
+
+                        <!-- Side-by-side comparison -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="bg-gray-900/80 p-4 rounded-lg border border-gray-800 text-center">
+                                <div class="text-xs text-gray-400">Baseline Attrition Risk</div>
+                                <div id="sim-current-risk" class="text-2xl font-bold text-gray-200 font-mono mt-1">--</div>
+                                <div class="text-[10px] text-gray-500">Current status quo</div>
+                            </div>
+                            <div class="bg-indigo-950/40 p-4 rounded-lg border border-indigo-700/50 text-center">
+                                <div class="text-xs text-indigo-300 font-semibold">Projected Attrition Risk</div>
+                                <div id="sim-proj-risk" class="text-2xl font-bold text-indigo-300 font-mono mt-1">--</div>
+                                <div class="text-[10px] text-indigo-400/80">With selected interventions</div>
+                            </div>
+                            <div class="bg-emerald-950/40 p-4 rounded-lg border border-emerald-700/50 text-center">
+                                <div class="text-xs text-emerald-300 font-semibold">Risk Reduction</div>
+                                <div id="sim-risk-delta" class="text-2xl font-bold text-emerald-400 font-mono mt-1">--</div>
+                                <div class="text-[10px] text-emerald-400/80">Estimated improvement</div>
+                            </div>
+                        </div>
+
+                        <!-- Financial Impact Details -->
+                        <div class="grid grid-cols-3 gap-4 bg-gray-900/60 p-4 rounded-lg text-xs space-y-0">
+                            <div>
+                                <div class="text-gray-400">Departures Prevented:</div>
+                                <div id="sim-prevented-departures" class="text-base font-bold text-white font-mono mt-0.5">--</div>
+                                <div class="text-[10px] text-gray-500">Annualized retention</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-400">Turnover Savings:</div>
+                                <div id="sim-turnover-savings" class="text-base font-bold text-emerald-400 font-mono mt-0.5">--</div>
+                                <div class="text-[10px] text-gray-500">Replacement cost avoided</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-400">Net Annual ROI:</div>
+                                <div id="sim-net-roi" class="text-base font-bold text-cyan-400 font-mono mt-0.5">--</div>
+                                <div class="text-[10px] text-gray-500">Savings minus adjustments</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Defensible Model Disclaimer -->
+                    <div class="p-3 bg-gray-900/90 rounded border border-gray-800 text-[11px] text-gray-400 italic">
+                        <strong>Disclaimer:</strong> <span id="sim-disclaimer">Model-based projection, not a guaranteed outcome.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: HR ACTION CENTER & AUDIT TRAIL -->
+        <section id="tab-actions" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">HR Action Center (Human-in-the-Loop Governance)</h2>
+                <p class="text-xs text-gray-400">The AI platform recommends interventions; authorized HR leaders retain final decision authority (Approve, Modify, Dismiss, Execute).</p>
+            </div>
+
+            <!-- Actions Table -->
+            <div class="glass-card overflow-hidden">
+                <div class="p-4 border-b border-gray-800 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-white">Pending & Executed Recommendations</h3>
+                    <span class="text-xs text-indigo-400 font-mono">Traceable Decision Pipeline</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-900 text-[11px] text-gray-400 uppercase font-mono border-b border-gray-800">
+                            <tr>
+                                <th class="p-3">ID</th>
+                                <th class="p-3">Title</th>
+                                <th class="p-3">Target Entity</th>
+                                <th class="p-3">Priority</th>
+                                <th class="p-3">Expected Impact</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3">Human Review</th>
+                            </tr>
+                        </thead>
+                        <tbody id="actions-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Immutable Decision Audit Trail -->
+            <div class="glass-card overflow-hidden">
+                <div class="p-4 border-b border-gray-800 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-white">Immutable Decision Audit Trail</h3>
+                    <span class="text-xs text-emerald-400 font-mono">SOC2 & Enterprise Compliant Logging</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-900 text-[11px] text-gray-400 uppercase font-mono border-b border-gray-800">
+                            <tr>
+                                <th class="p-2.5">Timestamp (UTC)</th>
+                                <th class="p-2.5">Event Type</th>
+                                <th class="p-2.5">Actor</th>
+                                <th class="p-2.5">Summary</th>
+                                <th class="p-2.5">Model Version</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: WORKFORCE RISK & ATTRITION PREDICTIONS -->
+        <section id="tab-attrition" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">Workforce Risk & Attrition Prediction (PyTorch CUDA)</h2>
+                <p class="text-xs text-gray-400">Deep neural network running on NVIDIA GeForce RTX 3070 Ti with SHAP-style explainability factors.</p>
+            </div>
+
+            <div class="glass-card overflow-hidden">
+                <div class="p-4 border-b border-gray-800 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-white">Employee Retention Risk Directory</h3>
+                    <span class="text-xs text-gray-400 font-mono">Defensible statistical phrasing enforced</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-900 text-[11px] text-gray-400 uppercase font-mono border-b border-gray-800">
+                            <tr>
+                                <th class="p-3">Code</th>
+                                <th class="p-3">Employee</th>
+                                <th class="p-3">Department</th>
+                                <th class="p-3">Role</th>
+                                <th class="p-3">Flight Probability</th>
+                                <th class="p-3">Risk Tier</th>
+                                <th class="p-3">Top Contributing Factors</th>
+                                <th class="p-3">Defensible Pattern Statement</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attrition-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: TALENT INTELLIGENCE & INTERVIEWS -->
+        <section id="tab-talent" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">Talent Intelligence & Intelligent Interview Agent</h2>
+                <p class="text-xs text-gray-400">Bias-aware candidate ranking, skill gap matching, and live STAR interview evaluation.</p>
+            </div>
+
+            <!-- Job Posting Selector & Anonymization Toggle -->
+            <div class="glass-card p-4 flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <label class="text-xs font-semibold text-gray-300">Select Requisition:</label>
+                    <select id="talent-posting-select" class="bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-xs text-white">
+                        <!-- Populated via JS -->
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <input id="anonymize-toggle" type="checkbox" class="rounded border-gray-700 text-indigo-600 focus:ring-0">
+                    <label for="anonymize-toggle" class="text-xs font-semibold text-gray-200 cursor-pointer">Enable Bias-Aware Anonymization Mode (Mask Names & PII)</label>
+                </div>
+            </div>
+
+            <!-- Candidates Ranking Grid -->
+            <div>
+                <h3 class="text-sm font-bold text-white mb-3">Ranked Candidate Pipeline</h3>
+                <div id="candidates-rank-cards" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Live STAR Interview Simulator -->
+            <div class="glass-card p-5 space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                    <h3 class="text-sm font-bold text-white">Interactive Interview Evaluator (STAR Scoring Engine)</h3>
+                    <span class="text-xs text-indigo-400 font-mono">Role Analysis & Competency Scorer</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Target Role:</label>
+                        <input id="interview-role-input" type="text" value="Senior Distributed Systems Engineer" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-xs text-white mb-2">
+                        <button id="interview-gen-btn" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs font-medium transition">Generate Dynamic Questions</button>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Generated Role Questions:</label>
+                        <select id="interview-questions-select" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-xs text-white mb-2">
+                            <!-- Populated via JS -->
+                        </select>
+                        <div class="text-[11px] text-gray-400 bg-gray-900/60 p-2 rounded">
+                            <span class="font-semibold text-indigo-300">Expected Evaluation Criteria:</span>
+                            <div id="interview-criteria-display" class="mt-0.5">STAR method, metrics, profiling tools, and quantifiable outcome.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-xs font-semibold text-gray-300">Candidate Response Transcript:</label>
+                        <div class="flex gap-2 text-xs">
+                            <button id="fill-strong-answer" class="text-indigo-400 hover:text-indigo-300 underline text-[11px]">Paste Strong STAR Answer</button>
+                            <span class="text-gray-600">|</span>
+                            <button id="fill-weak-answer" class="text-rose-400 hover:text-rose-300 underline text-[11px]">Paste Weak Answer</button>
+                        </div>
+                    </div>
+                    <textarea id="interview-answer-input" rows="4" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500" placeholder="Type candidate response or click prefill buttons above..."></textarea>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button id="interview-eval-btn" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded shadow transition">Evaluate Candidate Answer</button>
+                </div>
+
+                <div id="interview-scorecard-area" class="hidden">
+                    <!-- Dynamic Scorecard -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: PERFORMANCE 9-BOX MATRIX -->
+        <section id="tab-performance" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">Performance Intelligence & 9-Box Talent Matrix</h2>
+                <p class="text-xs text-gray-400">Calibrated cross-department performance evaluation synthesizing OKR goals, 360 sentiment, and promotion readiness.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 9-Box Grid Display -->
+                <div class="lg:col-span-2 glass-card p-5 space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                        <h3 class="text-sm font-bold text-white">Enterprise 9-Box Calibration Grid (Click cell to filter)</h3>
+                        <span class="text-xs text-gray-400 font-mono">Performance vs Potential</span>
+                    </div>
+
+                    <div class="nine-box-container">
+                        <!-- Row 1: High Potential -->
+                        <div class="nine-box-cell nine-box-growth" data-quadrant="Enigma / Action Needed">
+                            <div class="text-xs font-bold text-amber-400">Enigma / Action</div>
+                            <div class="text-[10px] text-gray-400">Low Perf × High Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+                        <div class="nine-box-cell nine-box-high" data-quadrant="High Potential Growth">
+                            <div class="text-xs font-bold text-blue-400">High Growth</div>
+                            <div class="text-[10px] text-gray-400">Med Perf × High Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+                        <div class="nine-box-cell nine-box-star" data-quadrant="High Potential Star">
+                            <div class="text-xs font-bold text-emerald-400">Star Talent</div>
+                            <div class="text-[10px] text-gray-400">High Perf × High Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+
+                        <!-- Row 2: Medium Potential -->
+                        <div class="nine-box-cell nine-box-risk" data-quadrant="Dilemma / Inconsistent">
+                            <div class="text-xs font-bold text-rose-400">Dilemma</div>
+                            <div class="text-[10px] text-gray-400">Low Perf × Med Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+                        <div class="nine-box-cell nine-box-high" data-quadrant="Core Contributor">
+                            <div class="text-xs font-bold text-blue-400">Core Contributor</div>
+                            <div class="text-[10px] text-gray-400">Med Perf × Med Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+                        <div class="nine-box-cell nine-box-star" data-quadrant="High Performer">
+                            <div class="text-xs font-bold text-emerald-400">High Performer</div>
+                            <div class="text-[10px] text-gray-400">High Perf × Med Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+
+                        <!-- Row 3: Low Potential -->
+                        <div class="nine-box-cell nine-box-risk" data-quadrant="Underperformer / PIP Candidate">
+                            <div class="text-xs font-bold text-rose-400">PIP Candidate</div>
+                            <div class="text-[10px] text-gray-400">Low Perf × Low Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+                        <div class="nine-box-cell nine-box-high" data-quadrant="Effective Contributor">
+                            <div class="text-xs font-bold text-gray-300">Effective</div>
+                            <div class="text-[10px] text-gray-400">Med Perf × Low Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+                        <div class="nine-box-cell nine-box-high" data-quadrant="Solid Professional">
+                            <div class="text-xs font-bold text-blue-400">Solid Pro</div>
+                            <div class="text-[10px] text-gray-400">High Perf × Low Pot</div>
+                            <div class="cell-count text-xs font-mono font-bold text-white mt-2">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calibration Summary -->
+                <div class="glass-card p-5 space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-gray-800 pb-2">Talent Calibration Metrics</h3>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between text-gray-300">
+                            <span>Mean Performance Score:</span>
+                            <span id="perf-avg-score" class="font-bold text-white font-mono">--</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>High-Potential Candidates:</span>
+                            <span id="perf-hipo-count" class="font-bold text-emerald-400 font-mono">--</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Coaching / PIP Candidates:</span>
+                            <span id="perf-coaching-count" class="font-bold text-rose-400 font-mono">--</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-gray-900 rounded text-[11px] text-gray-400 italic">
+                        <strong>Safety Boundary:</strong> System provides decision support and readiness indicators; formal employment and promotional decisions must be verified and signed off by authorized HR leadership.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Table -->
+            <div class="glass-card overflow-hidden">
+                <div class="p-4 border-b border-gray-800 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-white">Employee Performance Calibration Roster</h3>
+                    <span class="text-xs text-gray-400 font-mono">Click grid cells above to filter</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-900 text-[11px] text-gray-400 uppercase font-mono border-b border-gray-800">
+                            <tr>
+                                <th class="p-3">Employee</th>
+                                <th class="p-3">Department</th>
+                                <th class="p-3">Role</th>
+                                <th class="p-3">Review Score</th>
+                                <th class="p-3">Quadrant</th>
+                                <th class="p-3">Promotion Readiness</th>
+                                <th class="p-3">Recommended Pathway</th>
+                            </tr>
+                        </thead>
+                        <tbody id="perf-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 8: SKILL GRAPH & MOBILITY -->
+        <section id="tab-skills" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">Workforce Skill Graph & Internal Mobility</h2>
+                <p class="text-xs text-gray-400">Directed bipartite graph modeling organizational competencies, critical single-point dependencies, and career progression.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Canvas Topology -->
+                <div class="lg:col-span-2 glass-card p-5 space-y-3">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                        <h3 class="text-sm font-bold text-white">Organizational Skill Topology Canvas (NetworkX)</h3>
+                        <div class="flex gap-2 text-xs">
+                            <span class="flex items-center gap-1 text-emerald-400"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Employee</span>
+                            <span class="flex items-center gap-1 text-blue-400"><span class="h-2 w-2 rounded-full bg-blue-400"></span> Standard Skill</span>
+                            <span class="flex items-center gap-1 text-rose-400"><span class="h-2 w-2 rounded-full bg-rose-400"></span> SPOF Skill</span>
+                        </div>
+                    </div>
+                    <canvas id="skillCanvas"></canvas>
+                </div>
+
+                <!-- Right Column: SPOFs & Department Coverage -->
+                <div class="space-y-4">
+                    <div class="glass-card p-4 space-y-3">
+                        <h3 class="text-sm font-bold text-white border-b border-gray-800 pb-2">Critical Single-Point Vulnerabilities</h3>
+                        <div id="spof-alerts-container" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-4 space-y-3">
+                        <h3 class="text-sm font-bold text-white border-b border-gray-800 pb-2">Department Skill Coverage</h3>
+                        <div id="dept-coverage-bars" class="space-y-2">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internal Mobility Pathfinder -->
+            <div class="glass-card p-5 space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                    <h3 class="text-sm font-bold text-white">Internal Mobility & Career Progression Pathfinder</h3>
+                    <span class="text-xs text-indigo-400 font-mono">Shortest-Path Competency Engine</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Target Employee:</label>
+                        <input type="text" value="Elena Rostova (Senior Distributed Systems Engineer)" disabled class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-xs text-gray-300 mb-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Desired Future Role:</label>
+                        <select id="mobility-target-role" class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-1.5 text-xs text-white mb-2">
+                            <option value="Lead Machine Learning Architect">Lead Machine Learning Architect</option>
+                            <option value="Cloud DevOps Specialist">Cloud DevOps Specialist</option>
+                            <option value="Lead People Partner">Lead People Partner</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="calc-mobility-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs font-semibold transition">Calculate Upskilling Path</button>
+
+                <div id="mobility-result-area" class="hidden">
+                    <!-- Dynamic Result -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 9: ADAPTIVE ONBOARDING -->
+        <section id="tab-onboarding" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">Adaptive Onboarding Agent (30-60-90 Day Journeys)</h2>
+                <p class="text-xs text-gray-400">Dynamic milestone pacing adjusts automatically based on employee velocity, missed checkpoints, and role seniority.</p>
+            </div>
+
+            <div id="onboarding-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamic Onboarding Cards -->
+            </div>
+        </section>
+
+        <!-- TAB 10: POLICY INTELLIGENCE -->
+        <section id="tab-policy" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">HR Policy Intelligence (Source-Grounded RAG)</h2>
+                <p class="text-xs text-gray-400">Vector-retrieved policy reasoning providing exact handbook titles, section codes, page numbers, and verbatim chunk excerpts. Never hallucinates policy.</p>
+            </div>
+
+            <div class="glass-card p-5 space-y-4">
+                <div class="flex gap-2">
+                    <input id="policy-search-input" type="text" placeholder="e.g. What is the paid parental leave duration and return schedule?" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500">
+                    <button id="policy-search-btn" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow transition">Query Policy</button>
+                </div>
+
+                <!-- Preset Questions -->
+                <div>
+                    <div class="text-xs text-gray-400 mb-1.5 font-medium">Frequent Inquiries:</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="preset-policy-btn px-2.5 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-xs text-gray-300 transition" data-query="What is the parental leave duration?">"Parental leave duration"</button>
+                        <button class="preset-policy-btn px-2.5 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-xs text-gray-300 transition" data-query="What is the home workstation ergonomic stipend amount?">"Home workstation stipend"</button>
+                        <button class="preset-policy-btn px-2.5 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-xs text-gray-300 transition" data-query="What triggers a formal Performance Improvement Plan?">"PIP triggers & duration"</button>
+                        <button class="preset-policy-btn px-2.5 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-xs text-gray-300 transition" data-query="Can I bring my pet kangaroo to the office?">"Non-existent policy inquiry"</button>
+                    </div>
+                </div>
+
+                <div id="policy-results-area" class="hidden">
+                    <!-- Dynamic Policy Results -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 11: GOVERNANCE, MLOPS & FAIRNESS -->
+        <section id="tab-governance" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">Governance, MLOps Telemetry & Fairness Monitoring</h2>
+                <p class="text-xs text-gray-400">Continuous model calibration tracking, data quality validation, and demographic parity compliance.</p>
+            </div>
+
+            <!-- MLOps Metrics Cards -->
+            <div class="glass-card p-5 space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                    <h3 class="text-sm font-bold text-white">MLOps Telemetry & Attrition Model Validation</h3>
+                    <span id="mlops-device" class="text-xs text-emerald-400 font-mono">--</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-6 gap-3 text-center">
+                    <div class="bg-gray-900/60 p-3 rounded">
+                        <div class="text-[11px] text-gray-400">Accuracy</div>
+                        <div id="mlops-accuracy" class="text-lg font-bold text-white font-mono mt-0.5">--</div>
+                    </div>
+                    <div class="bg-gray-900/60 p-3 rounded">
+                        <div class="text-[11px] text-gray-400">Precision</div>
+                        <div id="mlops-precision" class="text-lg font-bold text-white font-mono mt-0.5">--</div>
+                    </div>
+                    <div class="bg-gray-900/60 p-3 rounded">
+                        <div class="text-[11px] text-gray-400">Recall</div>
+                        <div id="mlops-recall" class="text-lg font-bold text-white font-mono mt-0.5">--</div>
+                    </div>
+                    <div class="bg-gray-900/60 p-3 rounded">
+                        <div class="text-[11px] text-gray-400">F1 Score</div>
+                        <div id="mlops-f1" class="text-lg font-bold text-white font-mono mt-0.5">--</div>
+                    </div>
+                    <div class="bg-gray-900/60 p-3 rounded">
+                        <div class="text-[11px] text-gray-400">ROC-AUC</div>
+                        <div id="mlops-roc-auc" class="text-lg font-bold text-indigo-400 font-mono mt-0.5">--</div>
+                    </div>
+                    <div class="bg-gray-900/60 p-3 rounded">
+                        <div class="text-[11px] text-gray-400">Inference Latency</div>
+                        <div id="mlops-latency" class="text-lg font-bold text-emerald-400 font-mono mt-0.5">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Column: Data Quality & Fairness Monitor -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Data Quality -->
+                <div class="glass-card p-5 space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                        <h3 class="text-sm font-bold text-white">Pre-Flight Data Quality Health</h3>
+                        <span id="dq-status" class="px-2 py-0.5 text-xs font-semibold rounded badge-low">Healthy</span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 text-center bg-gray-900/60 p-3 rounded text-xs">
+                        <div>
+                            <div class="text-gray-400">Quality Score</div>
+                            <div id="dq-score" class="text-base font-bold text-emerald-400 font-mono mt-0.5">--</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-400">Missing Rate</div>
+                            <div id="dq-missing" class="text-base font-bold text-white font-mono mt-0.5">--</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-400">Duplicate Rate</div>
+                            <div id="dq-duplicates" class="text-base font-bold text-white font-mono mt-0.5">--</div>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-gray-400">
+                        Last Pre-Flight Validation: <span id="dq-last-check" class="text-gray-200 font-mono">--</span>
+                    </div>
+                </div>
+
+                <!-- Fairness Monitor -->
+                <div class="glass-card p-5 space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                        <h3 class="text-sm font-bold text-white">Recruitment Fairness & Bias Monitor</h3>
+                        <span id="fair-status" class="px-2 py-0.5 text-xs font-semibold rounded badge-low">Compliant</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-center bg-gray-900/60 p-3 rounded text-xs">
+                        <div>
+                            <div class="text-gray-400">Demographic Parity</div>
+                            <div id="fair-parity-score" class="text-base font-bold text-indigo-400 font-mono mt-0.5">--</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-400">Adverse Impact Ratio</div>
+                            <div id="fair-adverse-ratio" class="text-base font-bold text-emerald-400 font-mono mt-0.5">--</div>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-gray-300">
+                        <strong>EEOC 4/5ths Rule:</strong> Selection rate ratios maintained above 0.80 benchmark. Zero protected attribute leakage detected.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 bg-[#0f172a] text-xs text-gray-400 py-4 px-6 text-center">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>WorkSight AI • Enterprise Workforce Intelligence Platform</div>
+            <div class="font-mono text-gray-500">Theoretical Foundation: Lia Marthalia (2022), Cherrington (1995) • CUDA Accelerated</div>
+        </div>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
