@@ -29,7 +29,7 @@
                 <button data-tab="attrition" class="apple-segment-btn">Flight Risk</button>
                 <button data-tab="simulation" class="apple-segment-btn">Scenario Planner</button>
                 <button data-tab="actions" class="apple-segment-btn">Approvals</button>
-                <button data-tab="talent" class="apple-segment-btn">Recruitment</button>
+                <button data-tab="talent" class="apple-segment-btn">Recruitment & Interview</button>
                 <button data-tab="performance" class="apple-segment-btn">Performance</button>
                 <button data-tab="skills" class="apple-segment-btn">Skills & Mobility</button>
                 <button data-tab="onboarding" class="apple-segment-btn">Onboarding & IT</button>
@@ -39,6 +39,10 @@
         </div>
 
         <div class="flex items-center gap-3 text-xs">
+            <div id="header-ws-pill" class="flex items-center gap-1.5 px-3 py-1 bg-white border border-[rgba(0,0,0,0.06)] rounded-full shadow-sm text-xs">
+                <span id="header-ws-dot" class="h-2 w-2 rounded-full bg-[#86868b]"></span>
+                <span id="header-ws-text" class="text-[#86868b] font-medium">Connecting...</span>
+            </div>
             <div id="header-agent-pill" onclick="toggleAgentMode()" class="flex items-center gap-1.5 px-3 py-1 bg-white border border-[rgba(0,0,0,0.08)] rounded-full shadow-sm cursor-pointer hover:bg-[#fafafc] transition-colors" title="Click to toggle between Autonomous and Supervised mode">
                 <span id="header-agent-dot" class="h-2 w-2 rounded-full bg-[#34c759] animate-pulse"></span>
                 <span id="header-agent-text" class="text-[#1d1d1f] font-medium">Auto-Pilot: Active</span>
@@ -104,49 +108,49 @@
                             <div class="text-[10px] text-[#86868b] font-medium">1. Staffing</div>
                             <div class="font-semibold text-[#1d1d1f] mt-0.5 flex justify-between">
                                 <span>Capacity</span>
-                                <span class="text-[#34c759]">94%</span>
+                                <span id="op-staffing-val" class="text-[#34c759]">--</span>
                             </div>
                         </div>
                         <div class="bg-white border border-[rgba(0,0,0,0.06)] p-2.5 rounded-xl shadow-sm">
                             <div class="text-[10px] text-[#86868b] font-medium">2. Performance</div>
                             <div class="font-semibold text-[#1d1d1f] mt-0.5 flex justify-between">
                                 <span>9-Box Fit</span>
-                                <span class="text-[#34c759]">91%</span>
+                                <span id="op-performance-val" class="text-[#34c759]">--</span>
                             </div>
                         </div>
                         <div class="bg-white border border-[rgba(0,0,0,0.06)] p-2.5 rounded-xl shadow-sm">
                             <div class="text-[10px] text-[#86868b] font-medium">3. Compensation</div>
                             <div class="font-semibold text-[#1d1d1f] mt-0.5 flex justify-between">
                                 <span>Compa-Ratio</span>
-                                <span class="text-[#0071e3]">0.98</span>
+                                <span id="op-compensation-val" class="text-[#0071e3]">--</span>
                             </div>
                         </div>
                         <div class="bg-white border border-[rgba(0,0,0,0.06)] p-2.5 rounded-xl shadow-sm">
                             <div class="text-[10px] text-[#86868b] font-medium">4. Training</div>
                             <div class="font-semibold text-[#1d1d1f] mt-0.5 flex justify-between">
                                 <span>Upskilling</span>
-                                <span class="text-[#34c759]">92%</span>
+                                <span id="op-training-val" class="text-[#34c759]">--</span>
                             </div>
                         </div>
                         <div class="bg-white border border-[rgba(0,0,0,0.06)] p-2.5 rounded-xl shadow-sm">
                             <div class="text-[10px] text-[#86868b] font-medium">5. Relations</div>
                             <div class="font-semibold text-[#1d1d1f] mt-0.5 flex justify-between">
                                 <span>Pulse Index</span>
-                                <span class="text-[#34c759]">7.8/10</span>
+                                <span id="op-relations-val" class="text-[#34c759]">--</span>
                             </div>
                         </div>
                         <div class="bg-white border border-[rgba(0,0,0,0.06)] p-2.5 rounded-xl shadow-sm">
                             <div class="text-[10px] text-[#86868b] font-medium">6. Safety & Health</div>
                             <div class="font-semibold text-[#1d1d1f] mt-0.5 flex justify-between">
                                 <span>Overtime Cap</span>
-                                <span class="text-[#ff9500]">Active</span>
+                                <span id="op-safety-val" class="text-[#ff9500]">--</span>
                             </div>
                         </div>
                         <div class="bg-white border border-[rgba(0,0,0,0.06)] p-2.5 rounded-xl shadow-sm">
                             <div class="text-[10px] text-[#86868b] font-medium">7. Research</div>
                             <div class="font-semibold text-[#1d1d1f] mt-0.5 flex justify-between">
                                 <span>Absence Rate</span>
-                                <span class="text-[#34c759]">2.4%</span>
+                                <span id="op-research-val" class="text-[#34c759]">--</span>
                             </div>
                         </div>
                     </div>
@@ -222,6 +226,24 @@
                 </div>
             </div>
 
+            <!-- Multi-Source Cross-Reasoning Engine Hub (Hackathon Core Challenge) -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="apple-badge apple-badge-blue">Multi-Source Reasoning Hub</span>
+                            <span class="text-xs text-[#86868b]">Cross-Silo Synthesis: Attendance • Compensation • Performance • Skills • Neural Attrition AI</span>
+                        </div>
+                        <h2 class="text-lg font-semibold tracking-tight text-[#1d1d1f] mt-1">Multi-Source Cross-Reasoning & Action Recommendations</h2>
+                        <p class="text-xs text-[#86868b]">Reasons across multiple disparate HR data sources simultaneously to synthesize root-cause explanations and recommend high-impact interventions rather than simple chat.</p>
+                    </div>
+                    <span class="text-xs text-[#0071e3] font-medium font-mono">Cross-Silo Synthesis Active</span>
+                </div>
+                <div id="cross-reasoning-container" class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
             <!-- Workforce Research & Absenteeism Studio -->
             <div class="space-y-4">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
@@ -241,33 +263,10 @@
                     <div class="apple-card p-5 space-y-3">
                         <div class="flex justify-between items-center border-b border-[rgba(0,0,0,0.06)] pb-2.5">
                             <span class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f]">Root Causes of Absenteeism</span>
-                            <span class="text-xs font-semibold text-[#0071e3]">Rate: 2.4%</span>
+                            <span id="absenteeism-rate-badge" class="text-xs font-semibold text-[#0071e3]">Rate: --</span>
                         </div>
-                        <div class="space-y-3">
-                            <div class="bg-[#f5f5f7] p-3 rounded-xl space-y-1">
-                                <div class="flex justify-between text-xs font-semibold text-[#1d1d1f]">
-                                    <span>Overtime Burnout Fatigue</span>
-                                    <span class="text-[#ff3b30]">58% Impact</span>
-                                </div>
-                                <div class="text-[11px] text-[#86868b]">Staff logging >20h overtime have a 4.2x higher incidence of unplanned absences.</div>
-                                <div class="text-[10px] text-[#34c759] font-medium pt-0.5">✓ Intervention: 8h/mo overtime cap enforced</div>
-                            </div>
-                            <div class="bg-[#f5f5f7] p-3 rounded-xl space-y-1">
-                                <div class="flex justify-between text-xs font-semibold text-[#1d1d1f]">
-                                    <span>Commute Distance (>40km)</span>
-                                    <span class="text-[#ff9500]">24% Impact</span>
-                                </div>
-                                <div class="text-[11px] text-[#86868b]">Staff commuting >40km report 3.1x higher late arrival delays.</div>
-                                <div class="text-[10px] text-[#34c759] font-medium pt-0.5">✓ Intervention: 2-day flexible remote policy applied</div>
-                            </div>
-                            <div class="bg-[#f5f5f7] p-3 rounded-xl space-y-1">
-                                <div class="flex justify-between text-xs font-semibold text-[#1d1d1f]">
-                                    <span>Dependent & Health Strains</span>
-                                    <span class="text-[#0071e3]">18% Impact</span>
-                                </div>
-                                <div class="text-[11px] text-[#86868b]">Unforeseen family responsibilities during school/care holidays.</div>
-                                <div class="text-[10px] text-[#34c759] font-medium pt-0.5">✓ Intervention: Emergency backup family care benefit</div>
-                            </div>
+                        <div id="absenteeism-drivers-container" class="space-y-3">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
@@ -275,28 +274,10 @@
                     <div class="apple-card p-5 space-y-3">
                         <div class="flex justify-between items-center border-b border-[rgba(0,0,0,0.06)] pb-2.5">
                             <span class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f]">Recruitment Procedure Audit</span>
-                            <span class="text-xs font-semibold text-[#34c759]">Score: 92/100</span>
+                            <span id="recruitment-audit-score" class="text-xs font-semibold text-[#34c759]">Score: --</span>
                         </div>
-                        <div class="space-y-2.5 text-xs">
-                            <div class="flex justify-between py-1.5 border-b border-[rgba(0,0,0,0.04)]">
-                                <span class="text-[#86868b]">Time-to-Hire:</span>
-                                <span class="font-semibold text-[#1d1d1f]">18.4 days (Industry: 34d)</span>
-                            </div>
-                            <div class="flex justify-between py-1.5 border-b border-[rgba(0,0,0,0.04)]">
-                                <span class="text-[#86868b]">Offer Acceptance Rate:</span>
-                                <span class="font-semibold text-[#34c759]">91.2%</span>
-                            </div>
-                            <div class="flex justify-between py-1.5 border-b border-[rgba(0,0,0,0.04)]">
-                                <span class="text-[#86868b]">Blind Screening Bias Delta:</span>
-                                <span class="font-semibold text-[#0071e3]">+16.8% Diverse Qualified Pipeline</span>
-                            </div>
-                            <div class="flex justify-between py-1.5">
-                                <span class="text-[#86868b]">Procedural Reasonableness:</span>
-                                <span class="font-semibold text-[#34c759]">High (Verified Bias-Free)</span>
-                            </div>
-                            <div class="bg-[#f0f7ff] p-2.5 rounded-xl border border-[#0071e3]/10 text-[11px] text-[#0071e3]">
-                                Operational Finding: Anonymized technical screening boosts candidate trust and shortens candidate drop-off by 42%.
-                            </div>
+                        <div id="recruitment-audit-container" class="space-y-2.5 text-xs">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
@@ -304,23 +285,12 @@
                     <div class="apple-card p-5 space-y-3">
                         <div class="flex justify-between items-center border-b border-[rgba(0,0,0,0.06)] pb-2.5">
                             <span class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f]">Dissatisfaction Index</span>
-                            <span class="text-xs font-semibold text-[#34c759]">7.8 / 10.0</span>
+                            <span id="dissatisfaction-index-badge" class="text-xs font-semibold text-[#34c759]">--</span>
                         </div>
                         <div class="space-y-2.5 text-xs">
-                            <div class="text-[11px] text-[#86868b]">Top 3 drivers of workforce friction detected across 1-on-1s and pulse surveys:</div>
-                            <div class="space-y-2">
-                                <div class="p-2 bg-[#fffbfb] border border-[#ff3b30]/15 rounded-xl">
-                                    <div class="font-semibold text-[#ff3b30] text-xs">1. On-Call Pager Interruptions</div>
-                                    <div class="text-[11px] text-[#86868b]">Cloud & Systems engineers report disrupted sleep cycles.</div>
-                                </div>
-                                <div class="p-2 bg-[#fffdfa] border border-[#ff9500]/15 rounded-xl">
-                                    <div class="font-semibold text-[#ff9500] text-xs">2. Salary Below Peer Band</div>
-                                    <div class="text-[11px] text-[#86868b]">Compa-ratio deficit causes perceived inequity in Mid/Senior bands.</div>
-                                </div>
-                                <div class="p-2 bg-[#f5f5f7] border border-[rgba(0,0,0,0.05)] rounded-xl">
-                                    <div class="font-semibold text-[#1d1d1f] text-xs">3. Meeting Density > 20h/wk</div>
-                                    <div class="text-[11px] text-[#86868b]">Fragmented focus time lowers creative output in Product & Design.</div>
-                                </div>
+                            <div class="text-[11px] text-[#86868b]">Top drivers of workforce friction detected across 1-on-1s and pulse surveys:</div>
+                            <div id="dissatisfaction-drivers-container" class="space-y-2">
+                                <!-- Populated dynamically via JS -->
                             </div>
                         </div>
                     </div>
@@ -423,7 +393,7 @@
                         <span class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f]">Live Decision Stream</span>
                         <span class="h-2 w-2 rounded-full bg-[#34c759] animate-pulse"></span>
                     </div>
-                    <p class="text-[11px] text-[#86868b]">Immutable record of tasks executed autonomously by TalentOS without human intervention.</p>
+                    <p class="text-[11px] text-[#86868b]">Immutable record of tasks executed autonomously by Atlas without human intervention.</p>
 
                     <div id="agent-live-feed" class="space-y-3 max-h-[520px] overflow-y-auto pr-1">
                         <!-- Populated via JS -->
@@ -435,8 +405,12 @@
         <!-- TAB 2: FLIGHT RISK DIRECTORY -->
         <section id="tab-attrition" class="tab-content hidden space-y-6">
             <div>
-                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Staff Retention & Flight Risk</h1>
-                <p class="text-sm text-[#86868b] mt-1">Identifies employees experiencing workload exhaustion, compensation gaps, or promotion delays.</p>
+                <div class="flex items-center gap-2">
+                    <span class="apple-badge apple-badge-blue">Module 4</span>
+                    <span class="text-xs text-[#86868b]">PyTorch Neural Network • CUDA Acceleration • Feature Attribution</span>
+                </div>
+                <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">Employee Attrition Prediction System</h1>
+                <p class="text-xs text-[#86868b] mt-0.5">Identifies employees at risk of leaving using deep workforce patterns, overtime signals, compensation parity, and engagement signals.</p>
             </div>
 
             <div class="apple-card overflow-hidden">
@@ -665,8 +639,12 @@
         <!-- TAB 6: RECRUITMENT & INTERVIEWS -->
         <section id="tab-talent" class="tab-content hidden space-y-6">
             <div>
-                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Recruitment & Interviews</h1>
-                <p class="text-sm text-[#86868b] mt-1">Objective applicant qualification ranking and structured STAR interview evaluation.</p>
+                <div class="flex items-center gap-2">
+                    <span class="apple-badge apple-badge-blue">Module 1</span>
+                    <span class="text-xs text-[#86868b]">Resume Vectorization • Skill Relevance • Unconscious Bias Anonymization</span>
+                </div>
+                <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">AI Recruitment Intelligence Engine</h1>
+                <p class="text-xs text-[#86868b] mt-0.5">Ranks candidates objectively using parsed resumes, job requirements, skill match relevance, and experience alignment.</p>
             </div>
 
             <div class="apple-card p-4 flex flex-wrap justify-between items-center gap-4">
@@ -686,10 +664,15 @@
                 <!-- Populated via JS -->
             </div>
 
-            <!-- STAR Interview Evaluator -->
+            <!-- Intelligent Interview Agent -->
             <div class="apple-card p-6 space-y-4">
                 <div class="border-b border-[rgba(0,0,0,0.06)] pb-3">
-                    <h2 class="text-sm font-semibold tracking-tight text-[#1d1d1f]">Structured Interview Response Evaluator</h2>
+                    <div class="flex items-center gap-2">
+                        <span class="apple-badge apple-badge-blue">Module 7</span>
+                        <span class="text-xs text-[#86868b]">STAR Methodology • Dynamic Question Bank • Automated Response Scoring</span>
+                    </div>
+                    <h2 class="text-lg font-semibold tracking-tight text-[#1d1d1f] mt-1">Intelligent Interview Agent & Structured Insights</h2>
+                    <p class="text-xs text-[#86868b]">Generates role-specific behavioral and technical questions, analyzes response depth across 5 STAR dimensions, and compiles structured candidate scorecards.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -732,8 +715,12 @@
         <!-- TAB 7: PERFORMANCE 9-BOX -->
         <section id="tab-performance" class="tab-content hidden space-y-6">
             <div>
-                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Performance & 9-Box Matrix</h1>
-                <p class="text-sm text-[#86868b] mt-1">Calibrate talent across Performance and Potential to identify leaders and coaching needs.</p>
+                <div class="flex items-center gap-2">
+                    <span class="apple-badge apple-badge-blue">Module 5</span>
+                    <span class="text-xs text-[#86868b]">Goal OKR Tracking • 360 Feedback Sentiment • 9-Box Calibration</span>
+                </div>
+                <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">AI Performance Intelligence & 9-Box Talent Calibration</h1>
+                <p class="text-xs text-[#86868b] mt-0.5">Analyzes goals, feedback, and performance history to identify employee strengths, growth areas, and succession readiness.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -864,8 +851,12 @@
         <!-- TAB 8: SKILLS & MOBILITY -->
         <section id="tab-skills" class="tab-content hidden space-y-6">
             <div>
-                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">Skills & Internal Mobility</h1>
-                <p class="text-sm text-[#86868b] mt-1">Visualize company skill distribution, spot single-person dependencies, and calculate internal career paths.</p>
+                <div class="flex items-center gap-2">
+                    <span class="apple-badge apple-badge-blue">Module 6</span>
+                    <span class="text-xs text-[#86868b]">NetworkX Graph • SPOF Detection • Career Mobility Pathfinder</span>
+                </div>
+                <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">Workforce Skill Graph & Internal Mobility Pathfinder</h1>
+                <p class="text-xs text-[#86868b] mt-0.5">Maps employee skills against current and future organizational requirements, identifies critical dependencies, and plans internal career paths.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -906,8 +897,10 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-medium text-[#86868b] mb-1">Employee:</label>
-                        <input type="text" value="Elena Rostova (Senior Distributed Systems Engineer)" disabled class="apple-input text-xs bg-[#f5f5f7]">
+                        <label class="block text-xs font-medium text-[#86868b] mb-1">Select Employee:</label>
+                        <select id="mobility-employee-select" class="apple-input text-xs">
+                            <!-- Populated dynamically via JS -->
+                        </select>
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-[#86868b] mb-1">Desired Future Position:</label>
@@ -932,11 +925,11 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="apple-badge apple-badge-green">Zero-Touch IT Automation</span>
-                        <span class="text-xs text-[#86868b]">Corporate Identity • Hardware • Cloud Stack</span>
+                        <span class="apple-badge apple-badge-blue">Module 2</span>
+                        <span class="text-xs text-[#86868b]">Personalized Journeys • Role & Dept Adaptation • Autonomous IT Provisioning</span>
                     </div>
-                    <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">Autonomous Onboarding & IT Provisioning Studio</h1>
-                    <p class="text-xs text-[#86868b] mt-0.5">Atlas autonomously creates corporate emails, provisions single sign-on & 6 cloud systems, authorizes MacBook Pro M3 Max hardware dispatch ($1,200 stipend), and builds 30-60-90 day milestone roadmaps with zero human IT labor.</p>
+                    <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">Adaptive Onboarding Agent & IT Provisioning Studio</h1>
+                    <p class="text-xs text-[#86868b] mt-0.5">Creates personalized onboarding journeys based on role, department, and seniority profile, while autonomously issuing corporate emails, cloud access, and hardware dispatch.</p>
                 </div>
                 <div class="flex gap-2">
                     <button onclick="fillPresetOnboard('Kavita Sharma', 'Senior Cloud Architect', 'Engineering', 'kavita.sharma@example.com')" class="apple-btn-secondary text-xs">
@@ -952,17 +945,17 @@
             <div class="apple-card p-6 space-y-5">
                 <div class="border-b border-[rgba(0,0,0,0.06)] pb-3 flex justify-between items-center">
                     <span class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f]">Instant Autonomous Provisioning Dispatch</span>
-                    <span class="text-xs text-[#86868b]">Generates @worksight.ai Email, SSO, Okta, Slack, GitHub, Jira & Hardware</span>
+                    <span class="text-xs text-[#86868b]">Generates @atlas.corp Corporate Email, SSO, Okta, Slack, GitHub, Jira & Hardware</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-xs font-medium text-[#86868b] mb-1">Candidate Full Name:</label>
-                        <input id="onboard-name-input" type="text" placeholder="e.g. Kavita Sharma" class="apple-input text-xs py-2" value="Kavita Sharma">
+                        <input id="onboard-name-input" type="text" placeholder="e.g. Kavita Sharma" class="apple-input text-xs py-2" value="">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-[#86868b] mb-1">Target Role Title:</label>
-                        <input id="onboard-role-input" type="text" placeholder="e.g. Senior Cloud Architect" class="apple-input text-xs py-2" value="Senior Cloud Architect">
+                        <input id="onboard-role-input" type="text" placeholder="e.g. Senior Cloud Architect" class="apple-input text-xs py-2" value="">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-[#86868b] mb-1">Department:</label>
@@ -977,7 +970,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-[#86868b] mb-1">Personal / Personal Email:</label>
-                        <input id="onboard-email-input" type="email" placeholder="e.g. personal@gmail.com" class="apple-input text-xs py-2" value="kavita.sharma@example.com">
+                        <input id="onboard-email-input" type="email" placeholder="e.g. personal@gmail.com" class="apple-input text-xs py-2" value="">
                     </div>
                 </div>
 
@@ -1090,8 +1083,12 @@
         <!-- TAB 10: POLICY HANDBOOK -->
         <section id="tab-policy" class="tab-content hidden space-y-6">
             <div>
-                <h1 class="text-3xl font-semibold tracking-tight text-[#1d1d1f]">HR Policy Handbook</h1>
-                <p class="text-sm text-[#86868b] mt-1">Instant policy lookup for leave, hybrid work, compensation rules, and health benefits with exact handbook citations.</p>
+                <div class="flex items-center gap-2">
+                    <span class="apple-badge apple-badge-blue">Module 3</span>
+                    <span class="text-xs text-[#86868b]">Source-Grounded RAG • Handbook Citations • Zero-Hallucination Governance</span>
+                </div>
+                <h1 class="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1">HR Policy Reasoning Agent</h1>
+                <p class="text-xs text-[#86868b] mt-0.5">Answers complex corporate policy queries with contextual, source-backed responses, exact page and section citations, and recommended procedural actions.</p>
             </div>
 
             <div class="apple-card p-6 space-y-4">

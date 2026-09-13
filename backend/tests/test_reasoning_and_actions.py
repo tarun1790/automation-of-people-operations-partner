@@ -61,3 +61,15 @@ def test_human_in_the_loop_action_approval():
         assert "Approved" in latest_audit.summary
     finally:
         db.close()
+
+def test_cross_source_reasoning_endpoint():
+    from fastapi.testclient import TestClient
+    from backend.app.main import app
+    client = TestClient(app)
+    response = client.get("/api/v1/dashboard/cross-source-reasoning")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["engine"] == "Multi-Source Cross-Reasoning Engine"
+    assert len(data["data_sources_integrated"]) >= 5
+    assert "findings" in data
+    assert len(data["findings"]) > 0

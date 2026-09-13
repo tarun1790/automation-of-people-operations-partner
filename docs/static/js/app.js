@@ -1,4 +1,4 @@
-// WorkSight AI - Enterprise Client Application Logic
+// Atlas — Autonomous People Operations Partner Client Application Logic
 
 const API_BASE = '/api/v1';
 
@@ -6,12 +6,23 @@ const API_BASE = '/api/v1';
 let currentTab = 'dashboard';
 let anonymizeBias = false;
 let skillGraphData = null;
+let telemetryWs = null;
+
+// Production clean error handler - prevents noisy console logs in production
+function logProdError(scope, err) {
+    if (window.localStorage && window.localStorage.getItem('debug') === '1') {
+        console.warn(`[Atlas Telemetry: ${scope}]`, err);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
+    initWebSocketTelemetry();
     loadDashboardSummary();
+    loadOperationalTelemetry();
     loadRiskRadar();
     loadAIInsights();
+    loadCrossSourceReasoning();
     setupCommandCenter();
     setupWhatIfSimulator();
     loadHRActions();
@@ -20,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTalentIntelligence();
     loadPerformanceMatrix();
     loadSkillGraph();
+    loadEmployeesForMobility();
     loadOnboardingJourneys();
     setupPolicyIntelligence();
     loadGovernanceTelemetry();
@@ -27,14 +39,76 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAgentFeed();
     loadExecutiveBriefing();
 
-    // Live continuous sentinel polling
+    // Live continuous sentinel polling fallback
     setInterval(() => {
         loadExecutiveBriefing();
         loadAgentStatus();
         loadAgentFeed();
         loadDashboardSummary();
+        loadOperationalTelemetry();
     }, 15000);
 });
+
+// Real-Time Live WebSocket Telemetry Stream
+function initWebSocketTelemetry() {
+    const wsDot = document.getElementById('header-ws-dot');
+    const wsText = document.getElementById('header-ws-text');
+
+    if (location.protocol === 'file:') {
+        if (wsDot) wsDot.className = 'h-2 w-2 rounded-full bg-[#34c759] animate-pulse';
+        if (wsText) {
+            wsText.textContent = 'Live Feed Active';
+            wsText.className = 'text-[#34c759] font-medium';
+        }
+        return;
+    }
+
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws/telemetry`;
+
+    try {
+        telemetryWs = new WebSocket(wsUrl);
+
+        telemetryWs.onopen = () => {
+            if (wsDot) wsDot.className = 'h-2 w-2 rounded-full bg-[#34c759] animate-pulse';
+            if (wsText) {
+                wsText.textContent = 'Live Stream Active';
+                wsText.className = 'text-[#34c759] font-medium';
+            }
+        };
+
+        telemetryWs.onmessage = (event) => {
+            try {
+                const msg = JSON.parse(event.data);
+                if (msg.type === 'action_event' || msg.type === 'hire_event') {
+                    loadDashboardSummary();
+                    loadOperationalTelemetry();
+                    loadHRActions();
+                    loadAgentFeed();
+                }
+            } catch (_) {}
+        };
+
+        telemetryWs.onclose = () => {
+            if (wsDot) wsDot.className = 'h-2 w-2 rounded-full bg-[#ff9500]';
+            if (wsText) {
+                wsText.textContent = 'Live (Polling)';
+                wsText.className = 'text-[#ff9500] font-medium';
+            }
+            setTimeout(initWebSocketTelemetry, 5000);
+        };
+
+        telemetryWs.onerror = () => {
+            if (wsDot) wsDot.className = 'h-2 w-2 rounded-full bg-[#86868b]';
+            if (wsText) {
+                wsText.textContent = 'Real-Time Ready';
+                wsText.className = 'text-[#86868b] font-medium';
+            }
+        };
+    } catch (err) {
+        logProdError('initWebSocketTelemetry', err);
+    }
+}
 
 // Navigation Handling
 function initNavigation() {
@@ -84,7 +158,120 @@ async function loadDashboardSummary() {
         document.getElementById('metric-pending-actions').textContent = data.pending_actions_count;
         document.getElementById('metric-spofs').textContent = data.critical_spofs_count;
     } catch (err) {
-        console.error('Failed to load dashboard summary:', err);
+        logProdError('loadDashboardSummary', err);
+    }
+}
+
+// 1B. Dynamic Operational Health & Workforce Research Telemetry
+async function loadOperationalTelemetry() {
+    try {
+        const res = await fetch(`${API_BASE}/dashboard/operational-telemetry`);
+        const data = await res.json();
+        if (!data) return;
+
+        // 1. Seven Operational Health Cards
+        if (data.operational_metrics) {
+            const m = data.operational_metrics;
+            const staffEl = document.getElementById('op-staffing-val');
+            if (staffEl && m.staffing_capacity) staffEl.textContent = m.staffing_capacity.value;
+
+            const perfEl = document.getElementById('op-performance-val');
+            if (perfEl && m.performance_fit) perfEl.textContent = m.performance_fit.value;
+
+            const compaEl = document.getElementById('op-compensation-val');
+            if (compaEl && m.compensation_compa) compaEl.textContent = m.compensation_compa.value;
+
+            const trainEl = document.getElementById('op-training-val');
+            if (trainEl && m.upskilling_rate) trainEl.textContent = m.upskilling_rate.value;
+
+            const relEl = document.getElementById('op-relations-val');
+            if (relEl && m.relations_pulse) relEl.textContent = m.relations_pulse.value;
+
+            const safeEl = document.getElementById('op-safety-val');
+            if (safeEl && m.safety_overtime) safeEl.textContent = m.safety_overtime.value;
+
+            const resEl = document.getElementById('op-research-val');
+            if (resEl && m.absence_rate) resEl.textContent = m.absence_rate.value;
+        }
+
+        // 2. Absenteeism Drivers
+        if (data.absenteeism_drivers) {
+            const rateBadge = document.getElementById('absenteeism-rate-badge');
+            if (rateBadge) rateBadge.textContent = `Rate: ${data.absenteeism_drivers.overall_absence_rate}`;
+
+            const driversContainer = document.getElementById('absenteeism-drivers-container');
+            if (driversContainer && Array.isArray(data.absenteeism_drivers.drivers)) {
+                driversContainer.innerHTML = '';
+                data.absenteeism_drivers.drivers.forEach(d => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-[#f5f5f7] p-3 rounded-xl space-y-1';
+                    card.innerHTML = `
+                        <div class="flex justify-between text-xs font-semibold text-[#1d1d1f]">
+                            <span>${d.title}</span>
+                            <span class="text-[#ff3b30]">${d.impact_pct}</span>
+                        </div>
+                        <div class="text-[11px] text-[#86868b]">${d.description}</div>
+                        <div class="text-[10px] text-[#34c759] font-medium pt-0.5">✓ Intervention: ${d.intervention}</div>
+                    `;
+                    driversContainer.appendChild(card);
+                });
+            }
+        }
+
+        // 3. Recruitment Procedure Audit
+        if (data.recruitment_audit) {
+            const r = data.recruitment_audit;
+            const scoreBadge = document.getElementById('recruitment-audit-score');
+            if (scoreBadge) scoreBadge.textContent = `Score: ${r.score}/100`;
+
+            const auditContainer = document.getElementById('recruitment-audit-container');
+            if (auditContainer) {
+                auditContainer.innerHTML = `
+                    <div class="flex justify-between py-1.5 border-b border-[rgba(0,0,0,0.04)]">
+                        <span class="text-[#86868b]">Time-to-Hire:</span>
+                        <span class="font-semibold text-[#1d1d1f]">${r.time_to_hire_days} days (Industry: ${r.industry_avg_days}d)</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-[rgba(0,0,0,0.04)]">
+                        <span class="text-[#86868b]">Offer Acceptance Rate:</span>
+                        <span class="font-semibold text-[#34c759]">${r.offer_acceptance_rate}%</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-[rgba(0,0,0,0.04)]">
+                        <span class="text-[#86868b]">Blind Screening Bias Delta:</span>
+                        <span class="font-semibold text-[#0071e3]">${r.blind_screening_delta} Diverse Qualified Pipeline</span>
+                    </div>
+                    <div class="flex justify-between py-1.5">
+                        <span class="text-[#86868b]">Procedural Reasonableness:</span>
+                        <span class="font-semibold text-[#34c759]">${r.procedural_reasonableness}</span>
+                    </div>
+                    <div class="bg-[#f0f7ff] p-2.5 rounded-xl border border-[#0071e3]/10 text-[11px] text-[#0071e3]">
+                        Operational Finding: ${r.finding}
+                    </div>
+                `;
+            }
+        }
+
+        // 4. Workforce Dissatisfaction Analysis
+        if (data.dissatisfaction_analysis) {
+            const da = data.dissatisfaction_analysis;
+            const dissBadge = document.getElementById('dissatisfaction-index-badge');
+            if (dissBadge) dissBadge.textContent = da.index;
+
+            const dissContainer = document.getElementById('dissatisfaction-drivers-container');
+            if (dissContainer && Array.isArray(da.drivers)) {
+                dissContainer.innerHTML = '';
+                da.drivers.forEach(dr => {
+                    const item = document.createElement('div');
+                    item.className = 'p-2 bg-[#fffbfb] border border-[rgba(0,0,0,0.06)] rounded-xl';
+                    item.innerHTML = `
+                        <div class="font-semibold ${dr.color || 'text-[#ff3b30]'} text-xs">${dr.rank}. ${dr.title}</div>
+                        <div class="text-[11px] text-[#86868b]">${dr.description}</div>
+                    `;
+                    dissContainer.appendChild(item);
+                });
+            }
+        }
+    } catch (err) {
+        logProdError('loadOperationalTelemetry', err);
     }
 }
 
@@ -170,6 +357,87 @@ async function loadAIInsights() {
         });
     } catch (err) {
         console.error('Failed to load insights:', err);
+    }
+}
+
+// 3.5 Multi-Source Cross-Reasoning Engine (Hackathon Core Challenge)
+async function loadCrossSourceReasoning() {
+    try {
+        const res = await fetch(`${API_BASE}/dashboard/cross-source-reasoning`);
+        const data = await res.json();
+        const container = document.getElementById('cross-reasoning-container');
+        if (!container || !data.findings) return;
+
+        container.innerHTML = '';
+        data.findings.forEach(finding => {
+            const isCrit = finding.risk_tier === 'CRITICAL';
+            const badgeColor = isCrit ? 'apple-badge-red' : finding.risk_tier === 'MODERATE' ? 'apple-badge-orange' : 'apple-badge-green';
+            const cardBorder = isCrit ? 'border-[#ff3b30]/20 bg-gradient-to-br from-white to-[#fff9f9]' : 'bg-white';
+
+            const card = document.createElement('div');
+            card.className = `apple-card p-6 flex flex-col justify-between ${cardBorder} space-y-4 shadow-sm`;
+            card.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex flex-wrap justify-between items-start gap-2 border-b border-[rgba(0,0,0,0.06)] pb-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="apple-badge ${badgeColor}">${finding.risk_tier} RISK</span>
+                                <span class="text-xs font-semibold text-[#1d1d1f]">${finding.pattern_identified}</span>
+                            </div>
+                            <h3 class="text-base font-semibold text-[#1d1d1f] mt-1">${finding.employee_name}</h3>
+                            <div class="text-xs text-[#86868b]">${finding.role_title} • ${finding.department}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[11px] text-[#86868b]">Cross-Audit Confidence</div>
+                            <div class="text-sm font-semibold text-[#0071e3]">${finding.confidence}%</div>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Silo Evidence Points -->
+                    <div class="bg-[#f5f5f7] p-3.5 rounded-xl space-y-1.5">
+                        <div class="text-[10px] font-semibold text-[#86868b] uppercase tracking-wider flex items-center gap-1">
+                            <span>Correlated HR Data Sources:</span>
+                        </div>
+                        <div class="space-y-1 pt-1">
+                            ${finding.evidence.map(e => `
+                                <div class="text-xs text-[#1d1d1f] flex items-start gap-1.5">
+                                    <span class="text-[#0071e3] font-bold">↳</span>
+                                    <span>${e}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Multi-Step Causal Reasoning -->
+                    <div class="text-xs space-y-1 text-[#1d1d1f]">
+                        <span class="font-semibold text-[#86868b] uppercase tracking-wider text-[10px]">Causal Reasoning Synthesis:</span>
+                        <p class="text-xs text-[#1d1d1f] leading-relaxed bg-[#f0f7ff] p-3 rounded-xl border border-[#0071e3]/10">
+                            ${finding.reasoning}
+                        </p>
+                    </div>
+
+                    <!-- Actionable Recommendation -->
+                    <div class="text-xs space-y-1 text-[#1d1d1f]">
+                        <span class="font-semibold text-[#86868b] uppercase tracking-wider text-[10px]">Actionable Strategic Recommendation:</span>
+                        <div class="text-xs font-medium text-[#1d1d1f] whitespace-pre-line bg-white p-3 rounded-xl border border-[rgba(0,0,0,0.06)]">
+${finding.recommended_action}
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] text-[#34c759] font-medium pt-1">
+                        ✓ Expected Impact: ${finding.expected_impact}
+                    </div>
+                </div>
+
+                <div class="flex gap-2 pt-3 border-t border-[rgba(0,0,0,0.06)]">
+                    <button onclick="switchTab('actions')" class="apple-btn-primary flex-1 text-xs justify-center">Review Proposal in Approvals</button>
+                    <button onclick="switchTab('simulation')" class="apple-btn-secondary text-xs">Simulate Counterfactuals</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error('Failed to load cross-source reasoning:', err);
     }
 }
 
@@ -843,9 +1111,28 @@ function renderSkillGraphCanvas() {
     });
 }
 
+async function loadEmployeesForMobility() {
+    try {
+        const res = await fetch(`${API_BASE}/workforce/employees`);
+        const employees = await res.json();
+        const select = document.getElementById('mobility-employee-select');
+        if (!select || !Array.isArray(employees)) return;
+        select.innerHTML = '';
+        employees.forEach(e => {
+            const opt = document.createElement('option');
+            opt.value = e.id;
+            opt.textContent = `${e.name} (${e.role_title} • ${e.department})`;
+            select.appendChild(opt);
+        });
+    } catch (err) {
+        logProdError('loadEmployeesForMobility', err);
+    }
+}
+
 function setupMobilityPathfinder() {
     const btn = document.getElementById('calc-mobility-btn');
     const roleSelect = document.getElementById('mobility-target-role');
+    const empSelect = document.getElementById('mobility-employee-select');
     const resultArea = document.getElementById('mobility-result-area');
     if (!btn) return;
 
@@ -853,45 +1140,46 @@ function setupMobilityPathfinder() {
         btn.disabled = true;
         btn.textContent = 'Calculating...';
 
+        const empId = empSelect ? (parseInt(empSelect.value) || 1) : 1;
         try {
             const res = await fetch(`${API_BASE}/workforce/mobility-path`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    employee_id: 1, // Elena Rostova
+                    employee_id: empId,
                     target_role: roleSelect.value
                 })
             });
             const data = await res.json();
             resultArea.classList.remove('hidden');
             resultArea.innerHTML = `
-                <div class="card p-4 border border-blue-200 space-y-2.5 mt-3">
-                    <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-200">
-                        <span class="text-slate-700">Target Role: <strong>${data.target_role}</strong></span>
-                        <span class="badge badge-green font-bold">Readiness: ${data.readiness_pct}%</span>
+                <div class="apple-card p-4 border border-[#0071e3]/20 space-y-2.5 mt-3">
+                    <div class="flex justify-between items-center text-xs pb-2 border-b border-[rgba(0,0,0,0.06)]">
+                        <span class="text-[#1d1d1f]">Target Role: <strong>${data.target_role}</strong></span>
+                        <span class="apple-badge apple-badge-green font-semibold">Readiness: ${data.readiness_pct}%</span>
                     </div>
                     <div class="text-xs">
-                        <div class="font-semibold text-slate-800 mb-1">Competencies Already Met:</div>
+                        <div class="font-semibold text-[#1d1d1f] mb-1">Competencies Already Met:</div>
                         <div class="flex flex-wrap gap-1">
-                            ${data.matched_competencies.map(m => `<span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded text-[11px]">${m.skill} (${m.current_proficiency})</span>`).join('')}
+                            ${(data.matched_competencies || []).map(m => `<span class="bg-[#eefcf2] text-[#34c759] border border-[#34c759]/20 px-2 py-0.5 rounded-full text-[11px] font-medium">${m.skill} (${m.current_proficiency})</span>`).join('')}
                         </div>
                     </div>
                     <div class="text-xs">
-                        <div class="font-semibold text-slate-800 mb-1">Recommended Training & Certifications:</div>
-                        <div class="space-y-1 text-slate-700">
-                            ${data.missing_competencies.map(m => `<div class="flex items-center gap-1.5"><span class="text-blue-700">•</span><span><strong>${m.skill}:</strong> ${m.recommended_course}</span></div>`).join('')}
+                        <div class="font-semibold text-[#1d1d1f] mb-1">Recommended Training & Pathways:</div>
+                        <div class="space-y-1 text-[#1d1d1f]">
+                            ${(data.missing_competencies || []).map(m => `<div class="flex items-center gap-1.5"><span class="text-[#0071e3]">•</span><span><strong>${m.skill}:</strong> ${m.recommended_course}</span></div>`).join('')}
                         </div>
                     </div>
-                    <div class="text-xs text-slate-600 pt-1 border-t border-slate-200">
+                    <div class="text-xs text-[#86868b] pt-1 border-t border-[rgba(0,0,0,0.06)]">
                         Estimated Preparation Time: <strong>${data.estimated_readiness_timeline}</strong>
                     </div>
                 </div>
             `;
         } catch (err) {
-            console.error('Mobility error:', err);
+            logProdError('mobilityPathfinder', err);
         } finally {
             btn.disabled = false;
-            btn.textContent = 'Calculate Training Path & Readiness';
+            btn.textContent = 'Calculate Learning Pathway';
         }
     });
 }

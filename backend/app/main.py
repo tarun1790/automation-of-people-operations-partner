@@ -1,5 +1,7 @@
+import asyncio
 from pathlib import Path
-from fastapi import FastAPI, Request
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
@@ -7,6 +9,7 @@ from backend.app.config import APP_NAME, APP_VERSION, API_PREFIX, DEVICE, CUDA_A
 from backend.app.database import engine, Base, SessionLocal
 from backend.app.services.seed_data import populate_database_if_empty
 from backend.app.services.sentinel_daemon import sentinel_daemon
+from backend.app.services.ws_manager import ws_manager
 from backend.app.routes import (
     dashboard_router,
     simulation_router,
@@ -21,10 +24,22 @@ from backend.app.routes import (
 # Initialize database schema
 Base.metadata.create_all(bind=engine)
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    db = SessionLocal()
+    try:
+        populate_database_if_empty(db)
+    finally:
+        db.close()
+    sentinel_daemon.start()
+    yield
+    sentinel_daemon.stop()
+
 app = FastAPI(
     title=APP_NAME,
     version=APP_VERSION,
-    description="Enterprise-grade AI workforce intelligence and decision platform that unifies heterogeneous HR data into an explainable reasoning and counterfactual simulation layer."
+    description="Atlas — Autonomous People Operations Partner platform unifying workforce intelligence, predictive risk modeling, and automated workflows.",
+    lifespan=lifespan
 )
 
 # CORS Middleware
@@ -56,25 +71,41 @@ TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
-@app.on_event("startup")
-def startup_event():
-    db = SessionLocal()
+@app.websocket("/ws/telemetry")
+async def websocket_telemetry_endpoint(websocket: WebSocket):
+    await ws_manager.connect(websocket)
+    # Send initial connection handshake
+    await websocket.send_json({
+        "type": "handshake",
+        "status": "connected",
+        "system": APP_NAME,
+        "device": GPU_NAME if CUDA_AVAILABLE else "CPU",
+        "cuda_active": CUDA_AVAILABLE,
+        "message": "Atlas Real-Time Live Stream Connected"
+    })
     try:
-        populate_database_if_empty(db)
-    finally:
-        db.close()
-    sentinel_daemon.start()
-
-@app.on_event("shutdown")
-def shutdown_event():
-    sentinel_daemon.stop()
+        while True:
+            try:
+                # Wait for client heartbeat or ping
+                data = await asyncio.wait_for(websocket.receive_text(), timeout=4.0)
+                if data == "ping":
+                    await websocket.send_json({"type": "pong"})
+            except asyncio.TimeoutError:
+                # Push periodic live telemetry heartbeat
+                await websocket.send_json({
+                    "type": "heartbeat",
+                    "status": "live",
+                    "sentinel_active": sentinel_daemon.is_running
+                })
+    except (WebSocketDisconnect, Exception):
+        ws_manager.disconnect(websocket)
 
 @app.get("/", response_class=HTMLResponse)
 def serve_index():
     index_file = TEMPLATE_DIR / "index.html"
     if index_file.exists():
         return FileResponse(index_file)
-    return HTMLResponse("<h2>WorkSight AI is initializing...</h2>")
+    return HTMLResponse("<h2>Atlas is initializing...</h2>")
 
 @app.get("/health")
 def health_check():
