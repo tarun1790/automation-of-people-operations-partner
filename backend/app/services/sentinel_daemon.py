@@ -17,9 +17,8 @@ class AutonomousSentinelDaemon:
     """
     Atlas Continuous Autonomous Sentinel Daemon:
     Runs a continuous background loop (24/7) monitoring workforce telemetry,
-    evaluating Cherrington's (1995) 7 core HR functions and Lia Marthalia's (2022)
-    organizational benefits, and autonomously executing remediations without requiring
-    manual human intervention.
+    evaluating core HR functions and organizational health metrics,
+    and autonomously executing remediations without requiring manual human intervention.
     """
 
     def __init__(self, interval_seconds: int = 30):
@@ -42,7 +41,7 @@ class AutonomousSentinelDaemon:
             {
                 "id": "SENTINEL-101",
                 "timestamp": (now - datetime.timedelta(minutes=35)).strftime("%Y-%m-%d %H:%M:%S"),
-                "function": "Safety and Health (Cherrington Function F)",
+                "function": "Safety & Health Operations",
                 "action": "Overtime Cap Enforced",
                 "target": "Elena Rostova (Engineering)",
                 "details": "Detected 32h/mo overtime (+150% above benchmark). Autonomously capped on-call shifts to 8h/mo per POL-SAFE-2025.",
@@ -52,7 +51,7 @@ class AutonomousSentinelDaemon:
             {
                 "id": "SENTINEL-102",
                 "timestamp": (now - datetime.timedelta(minutes=22)).strftime("%Y-%m-%d %H:%M:%S"),
-                "function": "Compensation (Cherrington Function C)",
+                "function": "Compensation & Equity",
                 "action": "Compa-Ratio Equity Calibration",
                 "target": "Marcus Brody (Product)",
                 "details": "Compa-ratio of 0.86 below departmental parity. Autonomously formulated +5.2% salary alignment proposal.",
@@ -62,7 +61,7 @@ class AutonomousSentinelDaemon:
             {
                 "id": "SENTINEL-103",
                 "timestamp": (now - datetime.timedelta(minutes=14)).strftime("%Y-%m-%d %H:%M:%S"),
-                "function": "Staffing / Employment (Cherrington Function A)",
+                "function": "Staffing & Recruitment",
                 "action": "Blind Resume Screening Completed",
                 "target": "Requisition REQ-2025-01",
                 "details": "Evaluated 3 applicants using anonymized identifiers. Top candidate scored 92% match; staged for panel interview.",
@@ -107,14 +106,14 @@ class AutonomousSentinelDaemon:
 
     def execute_tick(self) -> Dict[str, Any]:
         """
-        Execute a full sentinel heartbeat tick evaluating all 7 Cherrington (1995) functions:
-        1. Staffing / Employment
+        Execute a full sentinel heartbeat tick evaluating all 7 core operational functions:
+        1. Staffing / Recruitment
         2. Performance Evaluation
-        3. Compensation
+        3. Compensation & Equity
         4. Training and Development
         5. Employee Relations
         6. Safety and Health
-        7. Personnel Research
+        7. Workforce Research & Analytics
         """
         self.tick_count += 1
         self.last_tick_time = datetime.datetime.now()
@@ -129,32 +128,32 @@ class AutonomousSentinelDaemon:
                 "findings": []
             }
 
-            # 1. Staffing & Employment Sentinel (Cherrington Function A)
+            # 1. Staffing & Recruitment Sentinel
             staffing_res = self._evaluate_staffing_sentinel(db)
             if staffing_res:
                 results["findings"].append(staffing_res)
 
-            # 2. Performance Evaluation Sentinel (Cherrington Function B)
+            # 2. Performance Evaluation Sentinel
             perf_res = self._evaluate_performance_sentinel(db)
             if perf_res:
                 results["findings"].append(perf_res)
 
-            # 3. Compensation Sentinel (Cherrington Function C)
+            # 3. Compensation & Pay Equity Sentinel
             comp_res = self._evaluate_compensation_sentinel(db)
             if comp_res:
                 results["findings"].append(comp_res)
 
-            # 4. Training & Development Sentinel (Cherrington Function D)
+            # 4. Training & Development Sentinel
             train_res = self._evaluate_training_sentinel(db)
             if train_res:
                 results["findings"].append(train_res)
 
-            # 5. Safety and Health Sentinel (Cherrington Function F)
+            # 5. Safety and Health Sentinel
             safety_res = self._evaluate_safety_sentinel(db)
             if safety_res:
                 results["findings"].append(safety_res)
 
-            # 6. Personnel Research & Absenteeism Sentinel (Cherrington Function G)
+            # 6. Workforce Research & Absenteeism Sentinel
             research_res = self._evaluate_research_sentinel(db)
             if research_res:
                 results["findings"].append(research_res)
@@ -168,10 +167,10 @@ class AutonomousSentinelDaemon:
         finally:
             db.close()
 
-    # --- CHERRINGTON 1995 SENTINELS ---
+    # --- CORE WORKFORCE OPERATIONS SENTINELS ---
 
     def _evaluate_staffing_sentinel(self, db: Session) -> Optional[Dict[str, Any]]:
-        """Cherrington Function A: Staffing / Employment (Planning, Drawing, Selecting)."""
+        """Sentinel: Staffing / Recruitment (Talent Planning, Sourcing, Blind Screening)."""
         open_reqs = db.query(JobPosting).filter(JobPosting.status == "Open").all()
         if not open_reqs:
             return None
@@ -217,7 +216,7 @@ class AutonomousSentinelDaemon:
         }
 
     def _evaluate_performance_sentinel(self, db: Session) -> Optional[Dict[str, Any]]:
-        """Cherrington Function B: Performance Evaluation (Company-wide appraisals, Merit promotion)."""
+        """Sentinel: Performance Evaluation (Company-wide appraisals, Merit promotion)."""
         # Identify high performers with >18 months without promotion
         stagnant_hipo = db.query(Employee).filter(
             Employee.performance_rating >= 4.2,
@@ -240,7 +239,7 @@ class AutonomousSentinelDaemon:
         }
 
     def _evaluate_compensation_sentinel(self, db: Session) -> Optional[Dict[str, Any]]:
-        """Cherrington Function C: Compensation (Balanced payment, salary structures, market alignment)."""
+        """Sentinel: Compensation (Balanced payment, salary structures, market alignment)."""
         underpaid = db.query(Employee).filter(
             Employee.current_salary < (Employee.market_salary_benchmark * 0.88),
             Employee.performance_rating >= 3.8,
@@ -264,7 +263,7 @@ class AutonomousSentinelDaemon:
         }
 
     def _evaluate_training_sentinel(self, db: Session) -> Optional[Dict[str, Any]]:
-        """Cherrington Function D: Training and Development (Coaching, practical training roadmaps)."""
+        """Sentinel: Training and Development (Coaching, practical training roadmaps)."""
         return {
             "function": "Training and Development",
             "status": "Active Cohorts",
@@ -273,7 +272,7 @@ class AutonomousSentinelDaemon:
         }
 
     def _evaluate_safety_sentinel(self, db: Session) -> Optional[Dict[str, Any]]:
-        """Cherrington Function F: Safety and Health (Burnout prevention, overtime fatigue, ergonomics)."""
+        """Sentinel: Safety and Health (Burnout prevention, overtime fatigue, ergonomics)."""
         fatigued = db.query(Employee).join(AttendanceRecord).filter(
             AttendanceRecord.overtime_hours >= 25.0,
             Employee.status == "Active"
@@ -295,7 +294,7 @@ class AutonomousSentinelDaemon:
 
     def _evaluate_research_sentinel(self, db: Session) -> Optional[Dict[str, Any]]:
         """
-        Cherrington Function G & Lia Marthalia (2022): Personnel Research.
+        Sentinel: Workforce Research & Absenteeism Diagnostics.
         Investigating causes of employee absenteeism, delays, and workforce dissatisfaction.
         """
         attendances = db.query(AttendanceRecord).all()
@@ -303,7 +302,7 @@ class AutonomousSentinelDaemon:
         total_tardies = sum(a.tardiness_count for a in attendances) if attendances else 12
 
         return {
-            "function": "Personnel Research (Cherrington G & Marthalia 2022)",
+            "function": "Workforce Research & Absenteeism Diagnostics",
             "status": "Empirical Study Current",
             "absenteeism_rate_pct": 2.4,
             "total_unplanned_absences": total_absences,
@@ -335,7 +334,7 @@ class AutonomousSentinelDaemon:
         """
         Generates the Proactive Executive Morning Briefing:
         Summarizes overnight autonomous actions, turnover costs saved,
-        Cherrington 7-function health status, and strategic next steps.
+        operational health status, and strategic next steps.
         """
         now = datetime.datetime.now()
         date_str = now.strftime("%A, %B %d, %Y")
@@ -347,12 +346,12 @@ class AutonomousSentinelDaemon:
             critical_risk_count = 3
         avg_health = 88.4
 
-        # Cherrington 7-Function Health Status
+        # Core Operational Health Status
         cherrington_functions = [
             {
                 "id": "staffing",
-                "name": "1. Staffing / Employment",
-                "academic_ref": "Cherrington (1995) §4.a",
+                "name": "1. Staffing / Recruitment",
+                "operational_scope": "Talent Sourcing & Capacity Planning",
                 "status": "Optimal",
                 "score": 94,
                 "summary": "Workforce planning active; open requisitions 100% matched with blind-screened talent."
@@ -360,7 +359,7 @@ class AutonomousSentinelDaemon:
             {
                 "id": "performance",
                 "name": "2. Performance Evaluation",
-                "academic_ref": "Cherrington (1995) §4.b",
+                "operational_scope": "Performance Review & 9-Box Calibration",
                 "status": "Calibrated",
                 "score": 91,
                 "summary": "9-box performance distribution verified across 6 departments; 4 promotion dossiers staged."
@@ -368,7 +367,7 @@ class AutonomousSentinelDaemon:
             {
                 "id": "compensation",
                 "name": "3. Compensation & Equity",
-                "academic_ref": "Cherrington (1995) §4.c",
+                "operational_scope": "Market Benchmark & Compa-Ratio Parity",
                 "status": "Balanced",
                 "score": 89,
                 "summary": "Compa-ratio median at 0.98. 2 market calibrations autonomously prepared."
@@ -376,7 +375,7 @@ class AutonomousSentinelDaemon:
             {
                 "id": "training",
                 "name": "4. Training & Development",
-                "academic_ref": "Cherrington (1995) §4.d",
+                "operational_scope": "Upskilling Tracks & Leadership Mentoring",
                 "status": "Active",
                 "score": 92,
                 "summary": "Practical skill tracks deployed; 8 engineers enrolled in high-impact distributed architecture."
@@ -384,7 +383,7 @@ class AutonomousSentinelDaemon:
             {
                 "id": "relations",
                 "name": "5. Employee Relations",
-                "academic_ref": "Cherrington (1995) §4.e",
+                "operational_scope": "Workplace Climate & Conflict Resolution",
                 "status": "Healthy",
                 "score": 95,
                 "summary": "Workplace climate stable; pulse satisfaction index at 7.8/10.0 across all teams."
@@ -392,15 +391,15 @@ class AutonomousSentinelDaemon:
             {
                 "id": "safety",
                 "name": "6. Safety & Health",
-                "academic_ref": "Cherrington (1995) §4.f",
+                "operational_scope": "Overtime Caps & Burnout Prevention",
                 "status": "Enforced",
                 "score": 86,
                 "summary": "Overtime caps actively enforced for on-call personnel; burnout fatigue mitigated."
             },
             {
                 "id": "research",
-                "name": "7. Personnel Research",
-                "academic_ref": "Cherrington (1995) §4.g & Marthalia (2022)",
+                "name": "7. Workforce Research & Analytics",
+                "operational_scope": "Absenteeism & Delay Root-Cause Diagnostics",
                 "status": "Empirical",
                 "score": 96,
                 "summary": "Root-cause analysis completed for employee absenteeism, delay factors, and friction trends."
@@ -439,12 +438,11 @@ class AutonomousSentinelDaemon:
     def get_personnel_research_report(self, db: Session) -> Dict[str, Any]:
         """
         In-depth Personnel Research & Absenteeism Studio Report:
-        Fulfills Cherrington's (1995) Function G and Lia Marthalia's (2022) Benefit E:
         Analyzing root causes of employee absenteeism, delay patterns, and workforce dissatisfaction.
         """
         return {
             "title": "Empirical Personnel Research & Absenteeism Analysis",
-            "academic_foundation": "Cherrington (1995) §4.g & Lia Marthalia (2022)",
+            "academic_foundation": "Workforce Intelligence & Attendance Diagnostics",
             "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "absenteeism_analysis": {
                 "overall_absence_rate_pct": 2.4,

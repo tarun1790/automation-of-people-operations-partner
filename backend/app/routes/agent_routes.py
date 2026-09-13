@@ -79,7 +79,7 @@ def onboard_new_hire(req: OnboardNewHireRequest, db: Session = Depends(get_db)):
 def get_executive_briefing(db: Session = Depends(get_db)):
     """
     Retrieve the Proactive Executive Morning Briefing summarizing overnight operations,
-    prevented turnover costs, Cherrington (1995) 7-function health, and daily recommendations.
+    prevented turnover costs, core operational health, and daily recommendations.
     """
     return autonomous_agent.get_executive_briefing(db)
 
@@ -90,13 +90,13 @@ def get_sentinel_status():
 
 @agent_router.post("/sentinel/tick")
 def trigger_sentinel_tick():
-    """Trigger an immediate heartbeat tick across Cherrington's 7 HRM functions."""
+    """Trigger an immediate heartbeat tick across core operational HRM functions."""
     return autonomous_agent.trigger_sentinel_tick()
 
 @agent_router.get("/sentinel/research")
 def get_personnel_research(db: Session = Depends(get_db)):
     """
-    Retrieve empirical Personnel Research & Absenteeism analysis fulfilling
-    Cherrington (1995) Function G and Lia Marthalia (2022) Benefit E.
+    Retrieve empirical Personnel Research & Absenteeism analysis evaluating
+    burnout, overtime, tardiness root causes, and recruitment reasonableness.
     """
     return autonomous_agent.get_personnel_research(db)

@@ -13,8 +13,8 @@
 
 $$\text{Data} \longrightarrow \text{Correlation} \longrightarrow \text{Detection} \longrightarrow \text{Explanation} \longrightarrow \text{Prediction} \longrightarrow \text{Recommendation} \longrightarrow \text{Simulation} \longrightarrow \text{Auto-Execution} \longrightarrow \text{Outcome Monitoring}$$
 
-### Foundational Academic Grounding
-The platform architecture is directly mapped to foundational human resource management research by **Lia Marthalia (2022)** (*The Importance of Human Resources (HR) Management in Company*, *Journal of World Science*, Vol 1 No. 9, pp. 700-705) and **Cherrington's (1995)** seven core HR functions:
+### Core People Operations Architecture
+The platform architecture is directly mapped to 7 core human capital operations functions:
 1. **Staffing & Employment**: Talent acquisition, candidate resume vectorization, and structured competency interviews.
 2. **Performance Evaluation**: Multi-source appraisal, 9-box talent matrix calibration, OKR tracking, and promotion readiness.
 3. **Compensation & Benefits**: Compa-ratio market alignment, retention bonuses, and equity delta forecasting.
@@ -104,7 +104,7 @@ Atlas enforces strict separation between three core layers:
 - **STAR Interview Evaluator**: Role-specific dynamic question generation and real-time response scoring across Technical Accuracy, Depth, STAR Structure, and Communication.
 
 ### Module 6: Performance Intelligence & 9-Box Matrix
-- Automates bi-annual appraisal calibrations (Cherrington 1995 function).
+- Automates bi-annual appraisal calibrations and performance distribution.
 - Maps workforce into a 9-box grid across **Performance** and **Potential**.
 - Generates promotion readiness scores and remedial coaching paths per company guidelines.
 

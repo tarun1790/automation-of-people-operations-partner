@@ -7,7 +7,7 @@ from backend.app.services.sentinel_daemon import sentinel_daemon
 client = TestClient(app)
 
 def test_sentinel_daemon_tick():
-    """Verify the autonomous sentinel daemon executes a tick evaluating Cherrington 1995 functions."""
+    """Verify the autonomous sentinel daemon executes a tick evaluating core operational HRM functions."""
     tick_result = sentinel_daemon.execute_tick()
     assert tick_result is not None
     assert tick_result["tick_number"] >= 1
@@ -16,7 +16,7 @@ def test_sentinel_daemon_tick():
     assert len(tick_result["findings"]) >= 3
 
 def test_executive_briefing_endpoint():
-    """Verify the Executive Morning Briefing endpoint returns Cherrington 7-function health and financial impact."""
+    """Verify the Executive Morning Briefing endpoint returns core 7-function health and financial impact."""
     response = client.get("/api/v1/agent/briefing")
     assert response.status_code == 200
     data = response.json()
@@ -29,11 +29,11 @@ def test_executive_briefing_endpoint():
     assert len(data["strategic_recommendations"]) > 0
 
 def test_personnel_research_endpoint():
-    """Verify the Personnel Research & Absenteeism analysis endpoint per Cherrington Function G and Marthalia 2022."""
+    """Verify the Personnel Research & Absenteeism analysis endpoint."""
     response = client.get("/api/v1/agent/sentinel/research")
     assert response.status_code == 200
     data = response.json()
-    assert "Cherrington (1995)" in data["academic_foundation"]
+    assert "Workforce Intelligence" in data["academic_foundation"]
     assert "absenteeism_analysis" in data
     assert data["absenteeism_analysis"]["overall_absence_rate_pct"] > 0
     assert len(data["absenteeism_analysis"]["root_causes"]) >= 2
@@ -71,11 +71,11 @@ def test_agent_message_briefing_intent():
     assert response.status_code == 200
     data = response.json()
     assert data["intent"] == "Executive Morning Briefing"
-    assert "Cherrington 7-Function Status" in data["agent_response"]
+    assert "Core Operations Status" in data["agent_response"]
     assert "Financial Impact" in data["agent_response"]
 
 def test_agent_message_research_intent():
-    """Verify natural language request for Cherrington Function G personnel research."""
+    """Verify natural language request for personnel research."""
     payload = {
         "sender": "CEO",
         "message": "What does our personnel research say about causes of employee absenteeism and delays?",
@@ -85,5 +85,5 @@ def test_agent_message_research_intent():
     assert response.status_code == 200
     data = response.json()
     assert data["intent"] == "Personnel Research Analysis"
-    assert "Cherrington (1995)" in data["agent_response"]
+    assert "attendance analytics" in data["agent_response"]
     assert "Overtime Burnout Fatigue" in data["agent_response"]

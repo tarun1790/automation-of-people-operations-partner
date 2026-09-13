@@ -85,11 +85,11 @@ class AutonomousWorkforceAgent:
         return sentinel_daemon.get_executive_briefing(db)
 
     def get_personnel_research(self, db: Session) -> Dict[str, Any]:
-        """Returns empirical personnel research & absenteeism analysis per Cherrington Function G & Marthalia 2022."""
+        """Returns empirical personnel research & absenteeism analysis."""
         return sentinel_daemon.get_personnel_research_report(db)
 
     def trigger_sentinel_tick(self) -> Dict[str, Any]:
-        """Triggers an immediate sentinel heartbeat cycle across Cherrington's 7 HRM functions."""
+        """Triggers an immediate sentinel heartbeat cycle across core HRM functions."""
         return sentinel_daemon.execute_tick()
 
     def set_mode(self, new_mode: str) -> Dict[str, Any]:
@@ -356,19 +356,19 @@ class AutonomousWorkforceAgent:
                 f"{briefing['headline']} Operating under {briefing['operating_mode']}.\n"
                 f"• Financial Impact: Secured ${briefing['financial_savings_secured_usd']:,.0f} in prevented turnover & replacement costs.\n"
                 f"• Workforce Health: {briefing['workforce_health_score']}/100 across {briefing['total_active_staff']} staff.\n"
-                f"• Cherrington 7-Function Status: Staffing (94%), Performance (91%), Compensation (89%), Training (92%), Relations (95%), Safety (86%), Research (96%).\n"
+                f"• Core Operations Status: Staffing (94%), Performance (91%), Compensation (89%), Training (92%), Relations (95%), Safety (86%), Research (96%).\n"
                 f"• Top Priority Today: {briefing['strategic_recommendations'][0]}"
             )
             self._log_activity("Executive Briefing", "Morning Digest Delivered", f"Synthesized overnight operations for {sender}.", "Strategic situational awareness established.", 0.0)
 
-        # Intent 0.5: Personnel Research & Absenteeism Analysis (Cherrington Function G & Marthalia 2022)
-        elif any(w in msg_lower for w in ["absenteeism", "absence", "delay", "tardiness", "dissatisfaction", "personnel research", "marthalia", "cherrington"]):
+        # Intent 0.5: Personnel Research & Absenteeism Analysis
+        elif any(w in msg_lower for w in ["absenteeism", "absence", "delay", "tardiness", "dissatisfaction", "personnel research", "marthalia", "cherrington", "research"]):
             response_data["intent"] = "Personnel Research Analysis"
             res = self.get_personnel_research(db)
             response_data["research_data"] = res
             top_cause = res["absenteeism_analysis"]["root_causes"][0]
             response_data["agent_response"] = (
-                f"Per Cherrington (1995) §4.g and Lia Marthalia (2022), I analyzed workforce absenteeism and dissatisfaction patterns:\n"
+                f"Based on workforce diagnostics and attendance analytics, I analyzed absenteeism and dissatisfaction patterns:\n"
                 f"1. Unplanned Absences: {res['absenteeism_analysis']['unplanned_absences_last_30d']} incidents (Rate: {res['absenteeism_analysis']['overall_absence_rate_pct']}%).\n"
                 f"2. Primary Cause: {top_cause['cause']} ({top_cause['contribution_pct']}% contribution). {top_cause['description']}\n"
                 f"3. Recommended Intervention: {top_cause['intervention']}\n"

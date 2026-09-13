@@ -308,13 +308,13 @@
                 workforce_health_score: 88.4,
                 critical_retention_risks: 3,
                 cherrington_functions: [
-                    { id: "staffing", name: "1. Staffing / Employment", academic_ref: "Cherrington (1995) §4.a", status: "Optimal", score: 94 },
-                    { id: "performance", name: "2. Performance Evaluation", academic_ref: "Cherrington (1995) §4.b", status: "Calibrated", score: 91 },
-                    { id: "compensation", name: "3. Compensation & Equity", academic_ref: "Cherrington (1995) §4.c", status: "Balanced", score: 89 },
-                    { id: "training", name: "4. Training & Development", academic_ref: "Cherrington (1995) §4.d", status: "Active", score: 92 },
-                    { id: "relations", name: "5. Employee Relations", academic_ref: "Cherrington (1995) §4.e", status: "Healthy", score: 95 },
-                    { id: "safety", name: "6. Safety & Health", academic_ref: "Cherrington (1995) §4.f", status: "Enforced", score: 86 },
-                    { id: "research", name: "7. Personnel Research", academic_ref: "Cherrington (1995) §4.g & Marthalia (2022)", status: "Empirical", score: 96 }
+                    { id: "staffing", name: "1. Staffing / Recruitment", operational_scope: "Talent Sourcing & Capacity Planning", status: "Optimal", score: 94 },
+                    { id: "performance", name: "2. Performance Evaluation", operational_scope: "Performance Review & 9-Box Calibration", status: "Calibrated", score: 91 },
+                    { id: "compensation", name: "3. Compensation & Equity", operational_scope: "Market Benchmark & Compa-Ratio Parity", status: "Balanced", score: 89 },
+                    { id: "training", name: "4. Training & Development", operational_scope: "Upskilling Tracks & Leadership Mentoring", status: "Active", score: 92 },
+                    { id: "relations", name: "5. Employee Relations", operational_scope: "Workplace Climate & Conflict Resolution", status: "Healthy", score: 95 },
+                    { id: "safety", name: "6. Safety & Health", operational_scope: "Overtime Caps & Burnout Prevention", status: "Enforced", score: 86 },
+                    { id: "research", name: "7. Workforce Research & Analytics", operational_scope: "Absenteeism & Delay Root-Cause Diagnostics", status: "Empirical", score: 96 }
                 ],
                 marthalia_benefits: [
                     { benefit: "Competent Talent Utilization", impact: "High skill-to-role matching index (94%)" },
@@ -355,7 +355,7 @@
         if (u.includes('/agent/sentinel/research')) {
             return makeResponse({
                 title: "Empirical Personnel Research & Absenteeism Analysis",
-                academic_foundation: "Cherrington (1995) §4.g & Lia Marthalia (2022)",
+                academic_foundation: "Workforce Intelligence & Attendance Diagnostics",
                 absenteeism_analysis: {
                     overall_absence_rate_pct: 2.4,
                     unplanned_absences_last_30d: 24,
@@ -435,14 +435,14 @@
             if (msg.includes('briefing') || msg.includes('morning') || msg.includes('overnight') || msg.includes('summary')) {
                 return makeResponse({
                     intent: "Executive Morning Briefing",
-                    agent_response: "Good morning! Overnight, Atlas autonomously executed 4 workforce operations under Auto-Pilot mode.\n• Financial Impact: Secured $192,000 in prevented turnover costs.\n• Workforce Health Score: 88.4/100 across 32 active personnel.\n• Cherrington 7-Function Status: Staffing (94%), Performance (91%), Compensation (89%), Training (92%), Relations (95%), Safety (86%), Research (96%).\n• Priority Recommendation: Authorize Elena Rostova's +6% market retention package to permanently lock in core engineering architecture."
+                    agent_response: "Good morning! Overnight, Atlas autonomously executed 4 workforce operations under Auto-Pilot mode.\n• Financial Impact: Secured $192,000 in prevented turnover costs.\n• Workforce Health Score: 88.4/100 across 32 active personnel.\n• Core Operations Status: Staffing (94%), Performance (91%), Compensation (89%), Training (92%), Relations (95%), Safety (86%), Research (96%).\n• Priority Recommendation: Authorize Elena Rostova's +6% market retention package to permanently lock in core engineering architecture."
                 });
             }
 
-            if (msg.includes('absenteeism') || msg.includes('delays') || msg.includes('dissatisfaction') || msg.includes('research') || msg.includes('cherrington') || msg.includes('marthalia')) {
+            if (msg.includes('absenteeism') || msg.includes('delays') || msg.includes('dissatisfaction') || msg.includes('research')) {
                 return makeResponse({
                     intent: "Personnel Research Analysis",
-                    agent_response: "Per Cherrington (1995) §4.g and Lia Marthalia (2022), I evaluated company absenteeism and dissatisfaction:\n1. Unplanned Absences: 24 incidents (Rate: 2.4%).\n2. Primary Root Cause: Overtime Burnout Fatigue (58% contribution). Staff logging >20h overtime have a 4.2x higher absence rate.\n3. Intervention: Automated 8h/mo overtime cap enforced.\n4. Recruitment Reasonableness: 92/100 with +16.8% diversity pass-through via blind screening.\n5. Friction Driver: On-call pager interruptions in DevOps & Cloud Systems."
+                    agent_response: "Based on workforce diagnostics and attendance analytics, I evaluated company absenteeism and dissatisfaction:\n1. Unplanned Absences: 24 incidents (Rate: 2.4%).\n2. Primary Root Cause: Overtime Burnout Fatigue (58% contribution). Staff logging >20h overtime have a 4.2x higher absence rate.\n3. Intervention: Automated 8h/mo overtime cap enforced.\n4. Recruitment Reasonableness: 92/100 with +16.8% diversity pass-through via blind screening.\n5. Friction Driver: On-call pager interruptions in DevOps & Cloud Systems."
                 });
             }
 
